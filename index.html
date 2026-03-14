@@ -773,7 +773,8 @@ section { position: relative; }
 /* Ensure minimum touch target size 44x44px (WCAG 2.5.5 AAA / 24px for AA 2.5.8) */
 .nav-links a { min-height: 44px; display: inline-flex; align-items: center; }
 .footer-col a { min-height: 44px; display: flex; align-items: center; }
-.nav-toggle { min-width: 44px; min-height: 44px; justify-content: center; align-items: center; }
+.nav-toggle { min-width: 44px; min-height: 44px; justify-content: center; align-items: center; cursor: pointer; }
+.nav-toggle span { width: 26px; }
 
 /* High contrast mode support */
 @media (forced-colors: active) {
@@ -1287,10 +1288,16 @@ toggle.addEventListener('click', () => {
   const isOpen = toggle.classList.contains('active');
   toggle.setAttribute('aria-expanded', isOpen);
 });
-links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+function closeMenu() {
   toggle.classList.remove('active');
   links.classList.remove('open');
-}));
+  toggle.setAttribute('aria-expanded', 'false');
+}
+links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && links.classList.contains('open')) closeMenu(); });
+document.addEventListener('click', e => {
+  if (links.classList.contains('open') && !links.contains(e.target) && !toggle.contains(e.target)) closeMenu();
+});
 
 // Reveal
 const obs = new IntersectionObserver(entries => {
