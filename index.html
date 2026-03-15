@@ -440,18 +440,33 @@ section { position: relative; }
 .founder-role { font-size: var(--text-sm); color: var(--gray); }
 
 /* ========== SERVICES ========== */
-.services { background: var(--dark); }
-.services-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--grid-gap); margin-top: var(--space-m);
+.services { background: var(--dark); overflow: hidden; padding-bottom: var(--space-xl); }
+.services-carousel {
+  display: flex;
+  gap: var(--grid-gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-left: calc(max(4vw, 50vw - 800px) + var(--edge));
+  padding-right: clamp(4rem, 10vw, 12rem);
+  padding-bottom: 1.5rem;
+  margin-top: var(--space-m);
+  cursor: grab;
 }
-@media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 640px) { .services-grid { grid-template-columns: 1fr; } }
+.services-carousel.dragging { cursor: grabbing; scroll-snap-type: none; }
+.services-carousel::-webkit-scrollbar { height: 3px; }
+.services-carousel::-webkit-scrollbar-track { background: var(--dark-border); }
+.services-carousel::-webkit-scrollbar-thumb { background: var(--lime); border-radius: 2px; }
+.services-carousel { scrollbar-width: thin; scrollbar-color: var(--lime) var(--dark-border); }
 
 .svc {
   background: var(--black); border: 1px solid var(--dark-border);
   border-radius: var(--radius-md); padding: var(--card-pad);
   transition: border-color 0.4s, transform 0.4s var(--ease);
   position: relative; overflow: hidden;
+  flex: 0 0 clamp(280px, 32vw, 460px);
+  scroll-snap-align: start;
 }
 .svc::after {
   content: ''; position: absolute; top: 0; left: 0;
@@ -474,7 +489,7 @@ section { position: relative; }
 }
 .svc-icon svg { width: 26px; height: 26px; }
 
-.svc h3 { font-size: var(--text-xl); font-weight: 700; margin-bottom: var(--space-xs); letter-spacing: -0.01em; }
+.svc h3 { font-size: var(--heading-sm); font-weight: 700; margin-bottom: var(--space-xs); letter-spacing: -0.02em; line-height: 1.2; }
 .svc p { font-size: var(--text-base); color: var(--gray); line-height: 1.7; font-weight: 300; }
 
 /* hand note on services */
@@ -786,16 +801,14 @@ section { position: relative; }
 
 /* Wide monitors: expand grids */
 @media (min-width: 1600px) {
-  .services-grid { grid-template-columns: repeat(3, 1fr); }
   .brands-grid { grid-template-columns: repeat(4, 1fr); }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
   .manifesto-inner { gap: var(--space-l); }
   .access-grid { gap: var(--space-l); }
 }
 
-/* Ultrawide: 4-col services, process stays 5 */
+/* Ultrawide */
 @media (min-width: 2000px) {
-  .services-grid { grid-template-columns: repeat(3, 1fr); gap: var(--grid-gap); }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
   .brands-grid { grid-template-columns: repeat(4, 1fr); }
   .numbers-inner { grid-template-columns: repeat(3, 1fr); }
@@ -960,15 +973,16 @@ section { position: relative; }
 </section>
 
 <!-- ========== SERVICES ========== -->
-<section class="services pad" id="services">
-  <div class="container">
+<section class="services" id="services">
+  <div class="container" style="padding: var(--space-xl) var(--edge) 0;">
     <div class="label r">O que fazemos</div>
     <h2 class="title r rd1">Da estratégia à entrega.</h2>
     <p class="r rd2" style="font-size: var(--text-lg); color: var(--gray-light); max-width: clamp(360px, 42vw, 700px); font-weight: 300; line-height: 1.75; margin-bottom: 1rem;">Cada projeto é único. Montamos o time certo, com as competências certas, para o desafio que você trouxer.</p>
     <p class="r rd3 hand-note" style="margin-bottom: 1rem;">um ponto de contato, zero ruído entre fornecedores ✦</p>
+  </div>
 
-    <div class="services-grid">
-      <div class="svc r">
+  <div class="services-carousel" role="list" aria-label="Serviços oferecidos">
+      <div class="svc r" role="listitem">
         <div class="svc-icon">
           <svg aria-hidden="true" width="22" aria-hidden="true" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
         </div>
@@ -1019,7 +1033,6 @@ section { position: relative; }
         <p>Auditorias WCAG, remediação, consultoria, treinamento. Acessibilidade não é feature — é requisito. Todas as entregas em conformidade.</p>
         <div class="svc-hand">para todos, sem exceção</div>
       </div>
-    </div>
   </div>
 </section>
 
@@ -1321,6 +1334,27 @@ window.addEventListener('scroll', () => {
     glow.style.transform = `translate(${-window.scrollY * 0.15}px, ${window.scrollY * 0.25}px)`;
   }
 });
+
+// Services carousel drag-to-scroll
+const svcCarousel = document.querySelector('.services-carousel');
+if (svcCarousel) {
+  let isDragging = false, startX = 0, scrollLeft = 0;
+  svcCarousel.addEventListener('mousedown', e => {
+    isDragging = true;
+    svcCarousel.classList.add('dragging');
+    startX = e.pageX - svcCarousel.offsetLeft;
+    scrollLeft = svcCarousel.scrollLeft;
+  });
+  const endDrag = () => { isDragging = false; svcCarousel.classList.remove('dragging'); };
+  svcCarousel.addEventListener('mouseleave', endDrag);
+  svcCarousel.addEventListener('mouseup', endDrag);
+  svcCarousel.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - svcCarousel.offsetLeft;
+    svcCarousel.scrollLeft = scrollLeft - (x - startX) * 1.2;
+  });
+}
 
 // Easter egg: Konami code shows a fun message
 let konamiSequence = [];
