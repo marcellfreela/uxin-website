@@ -458,7 +458,7 @@ section { position: relative; }
   content: '';
   display: block;
   flex-shrink: 0;
-  width: calc(max(4vw, (100vw - 1600px) / 2) + var(--edge));
+  width: var(--edge);
   min-width: var(--edge);
 }
 .services-carousel::after { width: clamp(4rem, 10vw, 12rem); min-width: 4rem; }
@@ -828,7 +828,6 @@ section { position: relative; }
   .footer-inner { max-width: min(2200px, 88vw); }
   .footer-bottom { max-width: min(2200px, 88vw); }
   .hero-glow { width: 1200px; height: 1200px; }
-  .services-carousel::before { width: calc(max(6vw, (100vw - 2200px) / 2) + var(--edge)); }
 }
 
 /* Small tablets / large phones: single column everything */
@@ -981,7 +980,7 @@ section { position: relative; }
 
 <!-- ========== SERVICES ========== -->
 <section class="services" id="services">
-  <div class="container" style="padding: var(--space-xl) var(--edge) 0;">
+  <div style="padding: var(--space-xl) var(--edge) 0;">
     <div class="label r">O que fazemos</div>
     <h2 class="title r rd1">Da estratégia à entrega.</h2>
     <p class="r rd2" style="font-size: var(--text-lg); color: var(--gray-light); max-width: clamp(360px, 42vw, 700px); font-weight: 300; line-height: 1.75; margin-bottom: 1rem;">Cada projeto é único. Montamos o time certo, com as competências certas, para o desafio que você trouxer.</p>
