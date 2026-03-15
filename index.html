@@ -801,6 +801,24 @@ section { position: relative; }
 }
 
 </style>
+<script>
+(function(){
+  var palettes=[
+    {main:'#D2FF00',soft:'#e4ff5c',dim:'#a8cc00'}, /* lime original */
+    {main:'#00D4FF',soft:'#5ce5ff',dim:'#00a8cc'}, /* ciano */
+    {main:'#FF006E',soft:'#ff5ca0',dim:'#cc0058'}, /* rosa */
+    {main:'#9B00FF',soft:'#bf5cff',dim:'#7a00cc'}, /* roxo */
+    {main:'#FF6B00',soft:'#ff9a5c',dim:'#cc5500'}, /* laranja */
+    {main:'#00FF88',soft:'#5cffb4',dim:'#00cc6b'}, /* verde-menta */
+    {main:'#FFD200',soft:'#ffe45c',dim:'#cca800'}  /* amarelo */
+  ];
+  var p=palettes[Math.floor(Math.random()*palettes.length)];
+  var s=document.documentElement.style;
+  s.setProperty('--lime',p.main);
+  s.setProperty('--lime-soft',p.soft);
+  s.setProperty('--lime-dim',p.dim);
+})();
+</script>
 </head>
 <body>
 
