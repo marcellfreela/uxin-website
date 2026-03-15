@@ -449,13 +449,19 @@ section { position: relative; }
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  padding-left: var(--edge);
-  padding-left: max(calc(4vw + var(--edge)), calc(50vw - 800px + var(--edge)));
-  padding-right: clamp(4rem, 10vw, 12rem);
   padding-bottom: var(--space-m);
   margin-top: var(--space-m);
   cursor: grab;
 }
+.services-carousel::before,
+.services-carousel::after {
+  content: '';
+  display: block;
+  flex-shrink: 0;
+  width: calc(4vw + var(--edge));
+  min-width: var(--edge);
+}
+.services-carousel::after { width: clamp(4rem, 10vw, 12rem); min-width: 4rem; }
 .services-carousel.dragging { cursor: grabbing; scroll-snap-type: none; }
 .services-carousel::-webkit-scrollbar { display: none; }
 .services-carousel { scrollbar-width: none; }
