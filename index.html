@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UXIN — Soluções Digitais com DNA de Design</title>
-<meta name="description" content="Produtos digitais que funcionam. Quase 20 anos resolvendo problemas reais com obsessão por experiência do usuário.">
+<title>UXIN | Soluções Digitais com DNA de Design</title>
+<meta name="description" content="Produtos digitais que funcionam. 20 anos resolvendo problemas reais com obsessão por experiência do usuário.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -351,15 +351,23 @@ section { position: relative; }
 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gap); }
 .stat {
   background: var(--dark-card); border: 1px solid var(--dark-border);
+  border-top: 2px solid var(--lime);
   border-radius: var(--radius-md); padding: var(--card-pad);
-  transition: border-color 0.3s, transform 0.3s var(--ease);
+  transition: border-color 0.3s, transform 0.3s var(--ease), background 0.3s;
+  position: relative; overflow: hidden;
 }
-.stat:hover { border-color: rgba(210,255,0,0.2); transform: translateY(-3px); }
+.stat::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at top left, rgba(210,255,0,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+.stat:hover { border-color: rgba(210,255,0,0.4); transform: translateY(-3px); background: rgba(22,22,22,0.9); }
 .stat-num {
-  font-size: var(--heading-sm); font-weight: 900;
-  color: var(--lime); letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.4rem;
+  font-size: var(--heading-md); font-weight: 900;
+  color: var(--lime); letter-spacing: -0.04em; line-height: 1; margin-bottom: 0.6rem;
+  font-family: var(--font-display);
 }
-.stat-txt { font-size: var(--text-sm); color: var(--gray); line-height: 1.5; }
+.stat-txt { font-size: var(--text-base); color: var(--gray-light); line-height: 1.5; font-weight: 300; }
 
 /* Human touch: photo placeholder with personality */
 .founder-note {
@@ -488,32 +496,48 @@ section { position: relative; }
   line-height: 1.75; max-width: clamp(400px, 45vw, 780px); margin-bottom: var(--space-m); font-weight: 300;
 }
 
-.brands-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--grid-gap);
+.segments-row {
+  display: flex; flex-wrap: wrap; gap: var(--space-xs);
+  margin-bottom: var(--space-l);
 }
-@media (max-width: 900px) { .brands-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 500px) { .brands-grid { grid-template-columns: 1fr; } }
-
-.bcat {
-  background: var(--black); border: 1px solid var(--dark-border);
-  border-radius: var(--radius-md); padding: var(--card-pad);
-  transition: border-color 0.3s;
-}
-.bcat:hover { border-color: rgba(210,255,0,0.12); }
-.bcat-label {
+.segment-tag {
   font-family: var(--font-mono); font-size: var(--mono-sm);
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--lime); margin-bottom: 1rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--lime); padding: 0.5rem 1.1rem;
+  border: 1px solid rgba(210,255,0,0.25);
+  border-radius: 999px;
+  transition: background 0.2s, border-color 0.2s;
 }
-.bcat ul { list-style: none; }
-.bcat li {
-  font-size: var(--text-base); color: var(--gray-light); padding: var(--space-xs) 0;
-  border-bottom: 1px solid rgba(255,255,255,0.03); font-weight: 400;
+.segment-tag:hover { background: rgba(210,255,0,0.06); border-color: rgba(210,255,0,0.5); }
+
+.brands-logos-wrap {
+  border-top: 1px solid var(--dark-border);
+  padding-top: var(--space-m);
+  margin-bottom: var(--space-m);
 }
-.bcat li:last-child { border-bottom: none; }
+.brands-context {
+  font-size: var(--text-sm); color: var(--gray);
+  margin-bottom: var(--space-m); font-style: italic;
+}
+.brand-logos {
+  display: flex; flex-wrap: wrap; gap: clamp(1.5rem, 2.5vw, 3rem);
+  align-items: center; justify-content: flex-start;
+}
+.brand-logo-item {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 44px; min-width: 44px;
+}
+.brand-logo {
+  height: clamp(24px, 2.5vw, 36px); width: auto; max-width: clamp(90px, 10vw, 140px);
+  object-fit: contain;
+  filter: grayscale(1) brightness(10); opacity: 0.35;
+  transition: opacity 0.3s, filter 0.3s;
+}
+.brand-logo:hover { opacity: 0.75; filter: grayscale(0.3) brightness(1.2); }
 
 .brands-countries {
   margin-top: var(--space-m); display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;
+  padding-top: var(--space-m); border-top: 1px solid var(--dark-border);
 }
 .country-tag {
   display: flex; align-items: center; gap: 0.5rem;
@@ -710,7 +734,7 @@ section { position: relative; }
   outline-offset: 4px;
   box-shadow: 0 0 0 4px rgba(210, 255, 0, 0.3);
 }
-.svc:focus-within, .stat:focus-within, .bcat:focus-within, .why-c:focus-within {
+.svc:focus-within, .stat:focus-within, .why-c:focus-within {
   outline: 2px solid var(--lime);
   outline-offset: 2px;
 }
@@ -739,7 +763,7 @@ section { position: relative; }
 /* High contrast mode support */
 @media (forced-colors: active) {
   .btn-p, .nav-cta { border: 2px solid ButtonText; }
-  .svc, .stat, .bcat, .why-c { border: 1px solid CanvasText; }
+  .svc, .stat, .why-c { border: 1px solid CanvasText; }
 }
 
 /* ========== LARGE SCREEN ENHANCEMENTS ========== */
@@ -784,7 +808,7 @@ section { position: relative; }
 
 <!-- Nav -->
 <nav class="nav" id="nav">
-  <a href="#" class="nav-logo" aria-label="UXIN — Página inicial"><svg viewBox="0 0 480 128" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 16.5449 0 12.8174 1.21793 9.87707C2.84183 5.95662 5.95662 2.84183 9.87707 1.21793C12.8174 0 16.5449 0 24 0C31.4551 0 35.1826 0 38.1229 1.21793C42.0434 2.84183 45.1582 5.95662 46.7821 9.87707C48 12.8174 48 16.5449 48 24V64C48 72.8366 55.1634 80 64 80C72.8366 80 80 72.8366 80 64V24C80 16.5449 80 12.8174 81.2179 9.87707C82.8418 5.95662 85.9566 2.84183 89.8771 1.21793C92.8174 0 96.5449 0 104 0C111.455 0 115.183 0 118.123 1.21793C122.043 2.84183 125.158 5.95662 126.782 9.87707C128 12.8174 128 16.5449 128 24V102.4C128 111.361 128 115.841 126.256 119.264C124.722 122.274 122.274 124.722 119.264 126.256C115.841 128 111.361 128 102.4 128H47.9058C42.0356 128 39.1005 128 36.3384 127.337C33.8896 126.749 31.5485 125.779 29.4012 124.463C26.9792 122.979 24.9037 120.904 20.7529 116.753L11.2471 107.247C7.09626 103.096 5.02084 101.021 3.53664 98.5988C2.22075 96.4515 1.25104 94.1104 0.663122 91.6616C0 88.8995 0 85.9644 0 80.0942V24Z" fill="#D4FF00"/><path d="M144 25.4558C144 16.631 144 12.2186 145.693 8.83721C147.24 5.74661 149.747 3.24014 152.837 1.69285C156.219 0 160.631 0 169.456 0C173.31 0 175.238 0 177.053 0.428963C178.724 0.823868 180.32 1.48514 181.781 2.38742C183.368 3.36752 184.73 4.73029 187.456 7.45584L189.898 9.89806C196.234 16.2343 199.402 19.4025 203.056 20.5895C206.269 21.6336 209.731 21.6336 212.944 20.5895C216.598 19.4025 219.766 16.2343 226.102 9.89807L228.544 7.45584C231.27 4.73029 232.632 3.36752 234.219 2.38742C235.68 1.48514 237.276 0.823868 238.947 0.428963C240.762 0 242.69 0 246.544 0C255.369 0 259.781 0 263.163 1.69285C266.253 3.24014 268.76 5.74661 270.307 8.83721C272 12.2186 272 16.631 272 25.4558C272 29.3104 272 31.2376 271.571 33.0526C271.176 34.7236 270.515 36.32 269.613 37.7808C268.632 39.3675 267.27 40.7303 264.544 43.4558L262.102 45.8981C255.766 52.2343 252.598 55.4025 251.411 59.0557C250.366 62.2692 250.366 65.7308 251.411 68.9443C252.598 72.5975 255.766 75.7657 262.102 82.1019L264.544 84.5442C267.27 87.2697 268.632 88.6325 269.613 90.2192C270.515 91.68 271.176 93.2764 271.571 94.9474C272 96.7624 272 98.6896 272 102.544C272 111.369 272 115.781 270.307 119.163C268.76 122.253 266.253 124.76 263.163 126.307C259.781 128 255.369 128 246.544 128C242.69 128 240.762 128 238.947 127.571C237.276 127.176 235.68 126.515 234.219 125.613C232.632 124.632 231.27 123.27 228.544 120.544L226.102 118.102C219.766 111.766 216.598 108.598 212.944 107.411C209.731 106.366 206.269 106.366 203.056 107.411C199.402 108.598 196.234 111.766 189.898 118.102L187.456 120.544C184.73 123.27 183.368 124.632 181.781 125.613C180.32 126.515 178.724 127.176 177.053 127.571C175.238 128 173.31 128 169.456 128C160.631 128 156.219 128 152.837 126.307C149.747 124.76 147.24 122.253 145.693 119.163C144 115.781 144 111.369 144 102.544C144 98.6896 144 96.7624 144.429 94.9474C144.824 93.2764 145.485 91.68 146.387 90.2192C147.368 88.6325 148.73 87.2697 151.456 84.5442L153.898 82.1019C160.234 75.7657 163.402 72.5975 164.589 68.9443C165.634 65.7308 165.634 62.2692 164.589 59.0557C163.402 55.4025 160.234 52.2343 153.898 45.8981L151.456 43.4558C148.73 40.7303 147.368 39.3675 146.387 37.7808C145.485 36.32 144.824 34.7236 144.429 33.0526C144 31.2376 144 29.3104 144 25.4558Z" fill="#D4FF00"/><path d="M336 24C336 16.5449 336 12.8174 334.782 9.87707C333.158 5.95662 330.043 2.84183 326.123 1.21793C323.183 0 319.455 0 312 0C304.545 0 300.817 0 297.877 1.21793C293.957 2.84183 290.842 5.95662 289.218 9.87707C288 12.8174 288 16.5449 288 24V104C288 111.455 288 115.183 289.218 118.123C290.842 122.043 293.957 125.158 297.877 126.782C300.817 128 304.545 128 312 128C319.455 128 323.183 128 326.123 126.782C330.043 125.158 333.158 122.043 334.782 118.123C336 115.183 336 111.455 336 104V24Z" fill="#D4FF00"/><path d="M352 104C352 111.455 352 115.183 353.218 118.123C354.842 122.043 357.957 125.158 361.877 126.782C364.817 128 368.545 128 376 128C383.455 128 387.183 128 390.123 126.782C394.043 125.158 397.158 122.043 398.782 118.123C400 115.183 400 111.455 400 104V64C400 55.1634 407.163 48 416 48C424.837 48 432 55.1634 432 64V104C432 111.455 432 115.183 433.218 118.123C434.842 122.043 437.957 125.158 441.877 126.782C444.817 128 448.545 128 456 128C463.455 128 467.183 128 470.123 126.782C474.043 125.158 477.158 122.043 478.782 118.123C480 115.183 480 111.455 480 104V47.9058C480 42.0356 480 39.1005 479.337 36.3384C478.749 33.8896 477.779 31.5485 476.463 29.4012C474.979 26.9792 472.904 24.9037 468.753 20.7529L459.247 11.2471C455.096 7.09626 453.021 5.02084 450.599 3.53664C448.452 2.22075 446.11 1.25104 443.662 0.663122C440.899 0 437.964 0 432.094 0H377.6C368.639 0 364.159 0 360.736 1.7439C357.726 3.27787 355.278 5.72556 353.744 8.73615C352 12.1587 352 16.6392 352 25.6V104Z" fill="#D4FF00"/></svg></a>
+  <a href="#" class="nav-logo" aria-label="UXIN, página inicial"><svg viewBox="0 0 480 128" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 16.5449 0 12.8174 1.21793 9.87707C2.84183 5.95662 5.95662 2.84183 9.87707 1.21793C12.8174 0 16.5449 0 24 0C31.4551 0 35.1826 0 38.1229 1.21793C42.0434 2.84183 45.1582 5.95662 46.7821 9.87707C48 12.8174 48 16.5449 48 24V64C48 72.8366 55.1634 80 64 80C72.8366 80 80 72.8366 80 64V24C80 16.5449 80 12.8174 81.2179 9.87707C82.8418 5.95662 85.9566 2.84183 89.8771 1.21793C92.8174 0 96.5449 0 104 0C111.455 0 115.183 0 118.123 1.21793C122.043 2.84183 125.158 5.95662 126.782 9.87707C128 12.8174 128 16.5449 128 24V102.4C128 111.361 128 115.841 126.256 119.264C124.722 122.274 122.274 124.722 119.264 126.256C115.841 128 111.361 128 102.4 128H47.9058C42.0356 128 39.1005 128 36.3384 127.337C33.8896 126.749 31.5485 125.779 29.4012 124.463C26.9792 122.979 24.9037 120.904 20.7529 116.753L11.2471 107.247C7.09626 103.096 5.02084 101.021 3.53664 98.5988C2.22075 96.4515 1.25104 94.1104 0.663122 91.6616C0 88.8995 0 85.9644 0 80.0942V24Z" fill="#D4FF00"/><path d="M144 25.4558C144 16.631 144 12.2186 145.693 8.83721C147.24 5.74661 149.747 3.24014 152.837 1.69285C156.219 0 160.631 0 169.456 0C173.31 0 175.238 0 177.053 0.428963C178.724 0.823868 180.32 1.48514 181.781 2.38742C183.368 3.36752 184.73 4.73029 187.456 7.45584L189.898 9.89806C196.234 16.2343 199.402 19.4025 203.056 20.5895C206.269 21.6336 209.731 21.6336 212.944 20.5895C216.598 19.4025 219.766 16.2343 226.102 9.89807L228.544 7.45584C231.27 4.73029 232.632 3.36752 234.219 2.38742C235.68 1.48514 237.276 0.823868 238.947 0.428963C240.762 0 242.69 0 246.544 0C255.369 0 259.781 0 263.163 1.69285C266.253 3.24014 268.76 5.74661 270.307 8.83721C272 12.2186 272 16.631 272 25.4558C272 29.3104 272 31.2376 271.571 33.0526C271.176 34.7236 270.515 36.32 269.613 37.7808C268.632 39.3675 267.27 40.7303 264.544 43.4558L262.102 45.8981C255.766 52.2343 252.598 55.4025 251.411 59.0557C250.366 62.2692 250.366 65.7308 251.411 68.9443C252.598 72.5975 255.766 75.7657 262.102 82.1019L264.544 84.5442C267.27 87.2697 268.632 88.6325 269.613 90.2192C270.515 91.68 271.176 93.2764 271.571 94.9474C272 96.7624 272 98.6896 272 102.544C272 111.369 272 115.781 270.307 119.163C268.76 122.253 266.253 124.76 263.163 126.307C259.781 128 255.369 128 246.544 128C242.69 128 240.762 128 238.947 127.571C237.276 127.176 235.68 126.515 234.219 125.613C232.632 124.632 231.27 123.27 228.544 120.544L226.102 118.102C219.766 111.766 216.598 108.598 212.944 107.411C209.731 106.366 206.269 106.366 203.056 107.411C199.402 108.598 196.234 111.766 189.898 118.102L187.456 120.544C184.73 123.27 183.368 124.632 181.781 125.613C180.32 126.515 178.724 127.176 177.053 127.571C175.238 128 173.31 128 169.456 128C160.631 128 156.219 128 152.837 126.307C149.747 124.76 147.24 122.253 145.693 119.163C144 115.781 144 111.369 144 102.544C144 98.6896 144 96.7624 144.429 94.9474C144.824 93.2764 145.485 91.68 146.387 90.2192C147.368 88.6325 148.73 87.2697 151.456 84.5442L153.898 82.1019C160.234 75.7657 163.402 72.5975 164.589 68.9443C165.634 65.7308 165.634 62.2692 164.589 59.0557C163.402 55.4025 160.234 52.2343 153.898 45.8981L151.456 43.4558C148.73 40.7303 147.368 39.3675 146.387 37.7808C145.485 36.32 144.824 34.7236 144.429 33.0526C144 31.2376 144 29.3104 144 25.4558Z" fill="#D4FF00"/><path d="M336 24C336 16.5449 336 12.8174 334.782 9.87707C333.158 5.95662 330.043 2.84183 326.123 1.21793C323.183 0 319.455 0 312 0C304.545 0 300.817 0 297.877 1.21793C293.957 2.84183 290.842 5.95662 289.218 9.87707C288 12.8174 288 16.5449 288 24V104C288 111.455 288 115.183 289.218 118.123C290.842 122.043 293.957 125.158 297.877 126.782C300.817 128 304.545 128 312 128C319.455 128 323.183 128 326.123 126.782C330.043 125.158 333.158 122.043 334.782 118.123C336 115.183 336 111.455 336 104V24Z" fill="#D4FF00"/><path d="M352 104C352 111.455 352 115.183 353.218 118.123C354.842 122.043 357.957 125.158 361.877 126.782C364.817 128 368.545 128 376 128C383.455 128 387.183 128 390.123 126.782C394.043 125.158 397.158 122.043 398.782 118.123C400 115.183 400 111.455 400 104V64C400 55.1634 407.163 48 416 48C424.837 48 432 55.1634 432 64V104C432 111.455 432 115.183 433.218 118.123C434.842 122.043 437.957 125.158 441.877 126.782C444.817 128 448.545 128 456 128C463.455 128 467.183 128 470.123 126.782C474.043 125.158 477.158 122.043 478.782 118.123C480 115.183 480 111.455 480 104V47.9058C480 42.0356 480 39.1005 479.337 36.3384C478.749 33.8896 477.779 31.5485 476.463 29.4012C474.979 26.9792 472.904 24.9037 468.753 20.7529L459.247 11.2471C455.096 7.09626 453.021 5.02084 450.599 3.53664C448.452 2.22075 446.11 1.25104 443.662 0.663122C440.899 0 437.964 0 432.094 0H377.6C368.639 0 364.159 0 360.736 1.7439C357.726 3.27787 355.278 5.72556 353.744 8.73615C352 12.1587 352 16.6392 352 25.6V104Z" fill="#D4FF00"/></svg></a>
   <div class="nav-links" id="navLinks" role="navigation" aria-label="Navegação principal">
     <a href="#manifesto">Sobre</a>
     <a href="#services">Serviços</a>
@@ -806,7 +830,7 @@ section { position: relative; }
       <span class="line"><span class="li">que <span class="hl">funcionam.</span></span></span>
     </h1>
     <p class="hero-desc">
-      Softwares, apps, sites e jornadas digitais construídos sobre quase 20 anos de obsessão por experiência do usuário. Do conceito à entrega — sem atrito, sem ruído.
+      Softwares, apps, sites e jornadas digitais construídos sobre 20 anos de obsessão por experiência do usuário. Do conceito à entrega. Sem atrito, sem ruído.
     </p>
     <div class="hero-actions">
       <a href="#contact" class="btn-p">
@@ -861,35 +885,35 @@ section { position: relative; }
           "Isso facilita ou complica a vida de quem vai usar?"
         </div>
 
-        <p class="r rd3">A UXIN nasceu da convicção de que <strong>soluções digitais precisam funcionar para quem usa, não só para quem encomenda.</strong> Estratégia, design e tecnologia em um só lugar — do conceito ao código, em uma única responsabilidade.</p>
+        <p class="r rd3">A UXIN nasceu da convicção de que <strong>soluções digitais precisam funcionar para quem usa, não só para quem encomenda.</strong> Estratégia, design e tecnologia em um só lugar: do conceito ao código, em uma única responsabilidade.</p>
 
         <p class="r rd4">Não somos uma fábrica de layouts. Somos uma empresa de soluções digitais com <strong>DNA de experiência do usuário</strong>. Isso muda como pesquisamos, projetamos, desenvolvemos e medimos resultado.</p>
 
-        <p class="r rd5">Cada projeto recebe um time montado sob medida para aquele desafio. Sem equipe genérica dividida entre cinco entregas. <strong>Um interlocutor, uma responsabilidade.</strong> Você fala com a UXIN — nós coordenamos todo o resto.</p>
+        <p class="r rd5">Cada projeto recebe um time montado sob medida para aquele desafio. Sem equipe genérica dividida entre cinco entregas. <strong>Um interlocutor, uma responsabilidade.</strong> Você fala com a UXIN. Nós coordenamos todo o resto.</p>
       </div>
 
       <div class="manifesto-right">
         <div class="stat-grid r rd3">
           <div class="stat">
-            <div class="stat-num">~20</div>
-            <div class="stat-txt">anos de experiência em projetos digitais</div>
+            <div class="stat-num">20</div>
+            <div class="stat-txt">anos de expertise em UX e produtos digitais</div>
           </div>
           <div class="stat">
-            <div class="stat-num">8+</div>
-            <div class="stat-txt">segmentos — varejo, finanças, saúde, governo...</div>
+            <div class="stat-num">26+</div>
+            <div class="stat-txt">marcas e organizações com projetos entregues</div>
           </div>
           <div class="stat">
             <div class="stat-num">4</div>
-            <div class="stat-txt">países com projetos entregues</div>
+            <div class="stat-txt">países: Brasil, Angola, México e Venezuela</div>
           </div>
           <div class="stat">
             <div class="stat-num">100%</div>
-            <div class="stat-txt">das entregas já nascem acessíveis</div>
+            <div class="stat-txt">das entregas em conformidade WCAG</div>
           </div>
         </div>
 
         <div class="founder-note r rd4">
-          <p class="founder-quote">A maioria das empresas trata UX como um departamento. Aqui é o ponto de partida. Cada decisão técnica, cada tela, cada fluxo — passa pelo filtro do usuário final.</p>
+          <p class="founder-quote">A maioria das empresas trata UX como um departamento. Aqui é o ponto de partida. Cada decisão técnica, cada tela, cada fluxo passa pelo filtro do usuário final.</p>
           <div class="founder-sig">
             <div class="founder-avatar">M</div>
             <div>
@@ -927,7 +951,7 @@ section { position: relative; }
           <svg aria-hidden="true" width="22" aria-hidden="true" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
         </div>
         <h3>Design de Produto</h3>
-        <p>Interface, experiência, design system, prototipagem — tudo pensado para implementação real, testado com pessoas reais.</p>
+        <p>Interface, experiência, design system, prototipagem. Tudo pensado para implementação real, testado com pessoas reais.</p>
       </div>
 
       <div class="svc r rd2">
@@ -935,7 +959,7 @@ section { position: relative; }
           <svg aria-hidden="true" width="22" aria-hidden="true" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
         </div>
         <h3>Sites & Plataformas Web</h3>
-        <p>Sites institucionais, e-commerces, landing pages, hotsites. Performance, SEO e conversão como premissa — não como afterthought.</p>
+        <p>Sites institucionais, e-commerces, landing pages, hotsites. Performance, SEO e conversão como premissa, não como afterthought.</p>
       </div>
 
       <div class="svc r rd3">
@@ -959,7 +983,7 @@ section { position: relative; }
           <svg aria-hidden="true" width="22" aria-hidden="true" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
         </div>
         <h3>Acessibilidade Digital</h3>
-        <p>Auditorias WCAG, remediação, consultoria, treinamento. Acessibilidade não é feature — é requisito. Todas as entregas em conformidade.</p>
+        <p>Auditorias WCAG, remediação, consultoria, treinamento. Acessibilidade não é feature. É requisito. Todas as entregas em conformidade.</p>
       </div>
   </div>
 </section>
@@ -969,7 +993,7 @@ section { position: relative; }
   <div class="container">
     <div class="label r">Como trabalhamos</div>
     <h2 class="title r rd1">Sem mistério,<br>sem surpresa.</h2>
-    <p class="r rd2" style="font-size: var(--text-lg); color: var(--gray-light); max-width: clamp(360px, 42vw, 700px); font-weight: 300; line-height: 1.75;">Cada etapa tem entrega clara. Você sabe o que está acontecendo — e por quê.</p>
+    <p class="r rd2" style="font-size: var(--text-lg); color: var(--gray-light); max-width: clamp(360px, 42vw, 700px); font-weight: 300; line-height: 1.75;">Cada etapa tem entrega clara. Você sabe o que está acontecendo e por quê.</p>
 
     <div class="process-steps">
       <div class="step r">
@@ -985,7 +1009,7 @@ section { position: relative; }
       <div class="step r rd2">
         <div class="step-n">03</div>
         <h3>Validar</h3>
-        <p>Protótipos testados com usuários reais. Corrigir aqui custa pouco — corrigir depois, não.</p>
+        <p>Protótipos testados com usuários reais. Corrigir aqui custa pouco. Corrigir depois, não.</p>
       </div>
       <div class="step r rd3">
         <div class="step-n">04</div>
@@ -1029,45 +1053,51 @@ section { position: relative; }
 <section class="brands pad" id="brands">
   <div class="container">
     <div class="label r">Trajetória</div>
-    <h2 class="title r rd1">Quase 20 anos.<br>Diversos segmentos.<br>4 países.</h2>
-    <p class="brands-intro r rd2">Esse repertório não é só currículo. É ter visto de perto o que funciona, o que quebra, o que escala e o que não sobrevive uma semana no ar. Cada setor tem suas particularidades — e nós aprendemos na prática.</p>
+    <h2 class="title r rd1">20 anos.<br>Diversos segmentos.<br>4 países.</h2>
+    <p class="brands-intro r rd2">Esse repertório não é só currículo. É ter visto de perto o que funciona, o que quebra, o que escala e o que não sobrevive uma semana no ar. Cada setor tem suas particularidades. Nós aprendemos na prática.</p>
 
-    <div class="brands-grid">
-      <div class="bcat r">
-        <div class="bcat-label">Varejo</div>
-        <ul><li>Lojas Renner</li><li>Riachuelo</li><li>Arezzo</li><li>Lojas Quero-Quero</li></ul>
-      </div>
-      <div class="bcat r rd1">
-        <div class="bcat-label">Finanças</div>
-        <ul><li>Banco Safra</li><li>Sicredi</li><li>Mercado Bitcoin</li><li>VerdeCard</li><li>Credz</li></ul>
-      </div>
-      <div class="bcat r rd2">
-        <div class="bcat-label">Saúde</div>
-        <ul><li>Unimed Nacional</li><li>Hermes Pardini</li></ul>
-      </div>
-      <div class="bcat r rd3">
-        <div class="bcat-label">Energia & Tech</div>
-        <ul><li>Schlumberger</li><li>Equinix</li><li>Coca-Cola</li></ul>
-      </div>
-      <div class="bcat r">
-        <div class="bcat-label">Governo</div>
-        <ul><li>SEFA Paraná</li><li>AGT Angola</li><li>MASFAMU</li></ul>
-      </div>
-      <div class="bcat r rd1">
-        <div class="bcat-label">Indústria</div>
-        <ul><li>Minerva Foods</li><li>Todeschini</li><li>Soprano</li><li>Agrofel</li></ul>
-      </div>
-      <div class="bcat r rd2">
-        <div class="bcat-label">Viagens</div>
-        <ul><li>ViajaNet</li><li>Turistur</li></ul>
-      </div>
-      <div class="bcat r rd3">
-        <div class="bcat-label">Luxo</div>
-        <ul><li>Fabrizzio Gianonne</li></ul>
+    <div class="segments-row r rd3" aria-label="Setores de atuação">
+      <span class="segment-tag">Varejo</span>
+      <span class="segment-tag">Finanças</span>
+      <span class="segment-tag">Saúde</span>
+      <span class="segment-tag">Energia &amp; Tech</span>
+      <span class="segment-tag">Governo</span>
+      <span class="segment-tag">Indústria</span>
+      <span class="segment-tag">Viagens</span>
+      <span class="segment-tag">Luxo</span>
+    </div>
+
+    <div class="brands-logos-wrap r rd4">
+      <p class="brands-context">Marcas e organizações que fizeram parte dessa trajetória profissional.</p>
+      <div class="brand-logos" role="list" aria-label="Marcas da trajetória">
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/renner.svg" alt="Renner" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/riachuelo.svg" alt="Riachuelo" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/arezzo.svg" alt="Arezzo" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/quero-quero.svg" alt="Quero-Quero" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/safra.svg" alt="Banco Safra" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/sicredi.svg" alt="Sicredi" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/mercado-bitcoin.svg" alt="Mercado Bitcoin" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/verdecard.svg" alt="VerdeCard" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/credz.svg" alt="Credz" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/unimed.svg" alt="Unimed Nacional" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/hermes-pardini.svg" alt="Hermes Pardini" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/schlumberger.svg" alt="Schlumberger" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/equinix.svg" alt="Equinix" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/coca-cola.svg" alt="Coca-Cola" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/sefa-pr.svg" alt="SEFA Paraná" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/agt-angola.svg" alt="AGT Angola" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/masfamu.svg" alt="MASFAMU" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/minerva-foods.svg" alt="Minerva Foods" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/todeschini.svg" alt="Todeschini" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/soprano.svg" alt="Soprano" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/agrofel.svg" alt="Agrofel" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/viajanet.svg" alt="ViajaNet" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/turistur.svg" alt="Turistur" class="brand-logo"></div>
+        <div class="brand-logo-item" role="listitem"><img src="assets/logos/fabrizzio-gianonne.svg" alt="Fabrizzio Gianonne" class="brand-logo"></div>
       </div>
     </div>
 
-    <div class="brands-countries r rd4">
+    <div class="brands-countries r rd5">
       <div class="country-tag"><span class="country-flag">🇧🇷</span> Brasil</div>
       <div class="country-tag"><span class="country-flag">🇦🇴</span> Angola</div>
       <div class="country-tag"><span class="country-flag">🇲🇽</span> México</div>
@@ -1083,7 +1113,7 @@ section { position: relative; }
       <div class="access-text">
         <div class="label r">Acessibilidade</div>
         <h2 class="title r rd1">Para todos.<br>Isso não é slogan.</h2>
-        <p class="r rd2">No Brasil, mais de 18 milhões de pessoas têm alguma deficiência. Ignorar acessibilidade não é só negligência — é perder mercado, é risco jurídico, é entregar menos do que o mínimo aceitável.</p>
+        <p class="r rd2">No Brasil, mais de 18 milhões de pessoas têm alguma deficiência. Ignorar acessibilidade não é só negligência: é perder mercado, é risco jurídico, é entregar menos do que o mínimo aceitável.</p>
         <p class="r rd3"><strong>Na UXIN, acessibilidade não é um checklist no final do projeto.</strong> Entra no processo desde o primeiro wireframe. Quando entregamos, já está em conformidade com WCAG. Sem retrofit, sem custo extra, sem "fase 2".</p>
       </div>
       <div class="access-visual r rd3">
@@ -1110,7 +1140,7 @@ section { position: relative; }
           </svg>
         </div>
         <div class="access-h">100% Acessível</div>
-        <div class="access-sub">Todas as entregas em conformidade WCAG — desde o dia 1</div>
+        <div class="access-sub">Todas as entregas em conformidade WCAG desde o dia 1</div>
         <div class="access-hand">acessibilidade é ponto de partida, não de chegada ✦</div>
       </div>
     </div>
@@ -1127,7 +1157,7 @@ section { position: relative; }
       <div class="why-c r">
         <div class="why-num">01</div>
         <h3>Experiência que<br>vem de antes</h3>
-        <p>UX não é um departamento que adicionamos — é a razão de existir da empresa. Cada decisão técnica passa pelo filtro do usuário final.</p>
+        <p>UX não é um departamento que adicionamos. É a razão de existir da empresa. Cada decisão técnica passa pelo filtro do usuário final.</p>
       </div>
       <div class="why-c r rd1">
         <div class="why-num">02</div>
