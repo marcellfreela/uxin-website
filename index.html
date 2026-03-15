@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UXIN | Soluções Digitais com DNA de Design</title>
-<meta name="description" content="Produtos digitais que funcionam. 20 anos resolvendo problemas reais com obsessão por experiência do usuário.">
+<meta name="description" content="Produtos digitais que funcionam. 20 anos de prática em UX. Do diagnóstico à entrega, sob uma única responsabilidade.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -28,7 +28,6 @@
   /* Fonts */
   --font-display: 'Outfit', sans-serif;
   --font-mono: 'Space Mono', monospace;
-  --font-hand: 'Caveat', cursive;
 
   /* Easing */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -56,11 +55,6 @@
   --heading-sm: clamp(1.5rem, 1.2rem + 1.2vw, 2.5rem);
   --heading-md: clamp(2.2rem, 1.5rem + 2.5vw, 4.5rem);
   --heading-lg: clamp(2.8rem, 1.5rem + 4.5vw, 7.5rem);
-
-  /* Fluid hand-written sizes */
-  --hand-sm: clamp(1.05rem, 0.9rem + 0.4vw, 1.35rem);
-  --hand-md: clamp(1.2rem, 1rem + 0.5vw, 1.6rem);
-  --hand-lg: clamp(1.4rem, 1.1rem + 0.7vw, 2rem);
 
   /* Fluid mono / label sizes */
   --mono-sm: clamp(0.75rem, 0.65rem + 0.25vw, 0.95rem);
@@ -190,8 +184,6 @@ section { position: relative; }
   margin-bottom: var(--space-s);
 }
 
-/* Handwritten annotations */
-
 /* ========== REVEAL ========== */
 .r {
   opacity: 0; transform: translateY(50px);
@@ -231,13 +223,6 @@ section { position: relative; }
 }
 
 .hero-content { position: relative; z-index: 1; max-width: min(1600px, 92vw); margin: 0 auto; width: 100%; }
-
-.hero-hi {
-  font-family: var(--font-hand); font-size: var(--hand-lg);
-  color: var(--lime); margin-bottom: 1.2rem;
-  opacity: 0; animation: fadeUp 0.7s var(--ease) 1.4s forwards;
-  display: inline-block; transform-origin: left;
-}
 
 .hero-title {
   font-size: var(--heading-lg);
@@ -285,9 +270,6 @@ section { position: relative; }
   transition: border-color 0.3s, background 0.3s;
 }
 .btn-g:hover { border-color: var(--gray); background: rgba(255,255,255,0.03); }
-
-/* hand-drawn annotation on hero */
-
 
 .hero-scroll {
   position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
@@ -369,31 +351,6 @@ section { position: relative; }
 }
 .stat-txt { font-size: var(--text-base); color: var(--gray-light); line-height: 1.5; font-weight: 300; }
 
-/* Human touch: photo placeholder with personality */
-.founder-note {
-  margin-top: 2rem; background: var(--dark-card);
-  border: 1px solid var(--dark-border); border-radius: var(--radius-md);
-  padding: var(--card-pad); position: relative;
-}
-.founder-note::before {
-  content: '"'; position: absolute; top: 0.5rem; left: 1rem;
-  font-family: var(--font-hand); font-size: 4rem; color: var(--lime); opacity: 0.2; line-height: 1;
-}
-.founder-quote {
-  font-size: var(--text-base); line-height: 1.7; color: var(--gray-light);
-  font-style: italic; font-weight: 300; padding-left: 0.5rem;
-}
-.founder-sig {
-  margin-top: 1.2rem; display: flex; align-items: center; gap: 0.8rem;
-}
-.founder-avatar {
-  width: 40px; height: 40px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--lime), var(--lime-dim));
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: var(--text-base); color: var(--black);
-}
-.founder-name { font-size: var(--text-base); font-weight: 600; }
-.founder-role { font-size: var(--text-sm); color: var(--gray); }
 
 /* ========== SERVICES ========== */
 .services { background: var(--dark); overflow: hidden; padding-bottom: var(--space-xl); }
@@ -456,8 +413,6 @@ section { position: relative; }
 .svc h3 { font-size: var(--heading-sm); font-weight: 700; margin-bottom: var(--space-xs); letter-spacing: -0.02em; line-height: 1.2; }
 .svc p { font-size: var(--text-base); color: var(--gray); line-height: 1.7; font-weight: 300; }
 
-/* hand note on services */
-
 /* ========== PROCESS ========== */
 .process { background: var(--black); }
 .process-steps {
@@ -488,8 +443,6 @@ section { position: relative; }
 }
 .step h3 { font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-xs); }
 .step p { font-size: var(--text-base); color: var(--gray); line-height: 1.6; font-weight: 300; }
-
-/* hand note on process */
 
 /* ========== BRANDS ========== */
 .brands { background: var(--dark); }
@@ -577,11 +530,6 @@ section { position: relative; }
 .access-icon svg { width: 100%; height: 100%; }
 .access-h { font-size: var(--heading-sm); font-weight: 800; margin-bottom: 0.4rem; position: relative; z-index: 1; }
 .access-sub { font-size: var(--text-base); color: var(--gray); font-weight: 300; position: relative; z-index: 1; }
-.access-hand {
-  font-family: var(--font-hand); font-size: var(--hand-md); color: var(--lime);
-  margin-top: var(--space-s); position: relative; z-index: 1; opacity: 0.8;
-}
-
 /* ========== WHY ========== */
 .why { background: var(--dark); }
 .why-grid {
@@ -677,10 +625,6 @@ section { position: relative; }
   font-size: var(--text-lg); color: var(--gray-light);
   max-width: clamp(320px, 35vw, 580px); margin: 0 auto 1rem; line-height: 1.7; font-weight: 300;
 }
-.cta-hand {
-  font-family: var(--font-hand); font-size: var(--hand-lg); color: var(--lime);
-  margin-bottom: var(--space-m); opacity: 0.8;
-}
 .cta-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
 
 /* ========== FOOTER ========== */
@@ -710,7 +654,6 @@ section { position: relative; }
   display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
 }
 .footer-bottom p { font-size: var(--text-sm); color: var(--gray); }
-.footer-hand { font-family: var(--font-hand); font-size: var(--hand-sm); color: var(--lime); opacity: 0.6; }
 
 /* ========== WCAG AA COMPLIANCE ========== */
 
@@ -850,7 +793,7 @@ section { position: relative; }
       <span class="line"><span class="li">que <span class="hl">funcionam.</span></span></span>
     </h1>
     <p class="hero-desc">
-      Softwares, apps, sites e jornadas digitais construídos sobre 20 anos de obsessão por experiência do usuário. Do conceito à entrega. Sem atrito, sem ruído.
+      Softwares, apps, sites e jornadas digitais. 20 anos de prática em UX. Do diagnóstico à entrega, sob uma única responsabilidade.
     </p>
     <div class="hero-actions">
       <a href="#contact" class="btn-p">
@@ -905,11 +848,11 @@ section { position: relative; }
           "Isso facilita ou complica a vida de quem vai usar?"
         </div>
 
-        <p class="r rd3">A UXIN nasceu da convicção de que <strong>soluções digitais precisam funcionar para quem usa, não só para quem encomenda.</strong> Estratégia, design e tecnologia em um só lugar: do conceito ao código, em uma única responsabilidade.</p>
+        <p class="r rd3"><strong>Soluções digitais precisam funcionar para quem usa, não só para quem encomenda.</strong> Estratégia, design e código sob a mesma responsabilidade, do início ao fim.</p>
 
-        <p class="r rd4">Não somos uma fábrica de layouts. Somos uma empresa de soluções digitais com <strong>DNA de experiência do usuário</strong>. Isso muda como pesquisamos, projetamos, desenvolvemos e medimos resultado.</p>
+        <p class="r rd4">UX não é um departamento aqui. É o ponto de partida. Isso muda como pesquisamos, projetamos, desenvolvemos e avaliamos resultado.</p>
 
-        <p class="r rd5">Cada projeto recebe um time montado sob medida para aquele desafio. Sem equipe genérica dividida entre cinco entregas. <strong>Um interlocutor, uma responsabilidade.</strong> Você fala com a UXIN. Nós coordenamos todo o resto.</p>
+        <p class="r rd5">Cada projeto recebe um time montado para aquele contexto. Sem equipe genérica dividida entre múltiplas entregas. <strong>Um interlocutor. Você fala com a UXIN, nós coordenamos o resto.</strong></p>
       </div>
 
       <div class="manifesto-right">
@@ -932,16 +875,6 @@ section { position: relative; }
           </div>
         </div>
 
-        <div class="founder-note r rd4">
-          <p class="founder-quote">A maioria das empresas trata UX como um departamento. Aqui é o ponto de partida. Cada decisão técnica, cada tela, cada fluxo passa pelo filtro do usuário final.</p>
-          <div class="founder-sig">
-            <div class="founder-avatar">M</div>
-            <div>
-              <div class="founder-name">Marcell</div>
-              <div class="founder-role">Fundador & Head de Design</div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -953,7 +886,7 @@ section { position: relative; }
     <div class="container">
       <div class="label r">O que fazemos</div>
       <h2 class="title r rd1">Da estratégia à entrega.</h2>
-      <p class="r rd2" style="font-size: var(--text-lg); color: var(--gray-light); max-width: clamp(360px, 42vw, 700px); font-weight: 300; line-height: 1.75; margin-bottom: 1rem;">Cada projeto é único. Montamos o time certo, com as competências certas, para o desafio que você trouxer.</p>
+      <p class="r rd2" style="font-size: var(--text-lg); color: var(--gray-light); max-width: clamp(360px, 42vw, 700px); font-weight: 300; line-height: 1.75; margin-bottom: 1rem;">Montamos um time específico para cada projeto. As competências necessárias, nenhuma extra.</p>
     </div>
   </div>
 
@@ -1024,7 +957,7 @@ section { position: relative; }
       <div class="step r rd1">
         <div class="step-n">02</div>
         <h3>Definir</h3>
-        <p>Escopo, roadmap, métricas de sucesso. A solução toma forma antes de virar pixel.</p>
+        <p>Escopo, roadmap, métricas de sucesso. A solução toma forma no papel antes de virar tela.</p>
       </div>
       <div class="step r rd2">
         <div class="step-n">03</div>
@@ -1039,7 +972,7 @@ section { position: relative; }
       <div class="step r rd4">
         <div class="step-n">05</div>
         <h3>Entregar</h3>
-        <p>Deploy, treinamento, documentação. E não desaparecemos depois.</p>
+        <p>Deploy, treinamento, documentação. Suporte após a entrega.</p>
       </div>
     </div>
 
@@ -1074,7 +1007,7 @@ section { position: relative; }
   <div class="container">
     <div class="label r">Trajetória</div>
     <h2 class="title r rd1">20 anos.<br>Diversos segmentos.<br>4 países.</h2>
-    <p class="brands-intro r rd2">Esse repertório não é só currículo. É ter visto de perto o que funciona, o que quebra, o que escala e o que não sobrevive uma semana no ar. Cada setor tem suas particularidades. Nós aprendemos na prática.</p>
+    <p class="brands-intro r rd2">Cada setor tem suas particularidades. Varejo, finanças, saúde, governo, indústria — trabalhamos com todos. O repertório acumulado informa cada novo projeto.</p>
 
     <div class="segments-row r rd3" aria-label="Setores de atuação">
       <span class="segment-tag">Varejo</span>
@@ -1133,8 +1066,8 @@ section { position: relative; }
       <div class="access-text">
         <div class="label r">Acessibilidade</div>
         <h2 class="title r rd1">Para todos.<br>Isso não é slogan.</h2>
-        <p class="r rd2">No Brasil, mais de 18 milhões de pessoas têm alguma deficiência. Ignorar acessibilidade não é só negligência: é perder mercado, é risco jurídico, é entregar menos do que o mínimo aceitável.</p>
-        <p class="r rd3"><strong>Na UXIN, acessibilidade não é um checklist no final do projeto.</strong> Entra no processo desde o primeiro wireframe. Quando entregamos, já está em conformidade com WCAG. Sem retrofit, sem custo extra, sem "fase 2".</p>
+        <p class="r rd2">No Brasil, mais de 18 milhões de pessoas têm alguma deficiência. Ignorar acessibilidade é entregar um produto incompleto — além de risco jurídico real.</p>
+        <p class="r rd3"><strong>Acessibilidade entra no processo desde o primeiro wireframe.</strong> Quando entregamos, já está em conformidade com WCAG. Sem retrofit no final.</p>
       </div>
       <div class="access-visual r rd3">
         <div class="access-icon">
@@ -1160,8 +1093,7 @@ section { position: relative; }
           </svg>
         </div>
         <div class="access-h">100% Acessível</div>
-        <div class="access-sub">Todas as entregas em conformidade WCAG desde o dia 1</div>
-        <div class="access-hand">acessibilidade é ponto de partida, não de chegada ✦</div>
+        <div class="access-sub">Todas as entregas em conformidade WCAG</div>
       </div>
     </div>
   </div>
@@ -1171,7 +1103,7 @@ section { position: relative; }
 <section class="why pad" id="why">
   <div class="container">
     <div class="label r">Por que a UXIN</div>
-    <h2 class="title r rd1">E não outra empresa</h2>
+    <h2 class="title r rd1">O que nos<br>diferencia.</h2>
 
     <div class="why-grid">
       <div class="why-c r">
@@ -1192,7 +1124,7 @@ section { position: relative; }
       <div class="why-c r rd3">
         <div class="why-num">04</div>
         <h3>Resultado que<br>se mede</h3>
-        <p>NPS, conversão, retenção, tempo de tarefa. O que não se mede, não se melhora. Entregamos resultado, não apenas artefato.</p>
+        <p>Definimos métricas de sucesso antes de começar e verificamos no final. NPS, conversão, retenção, tempo de tarefa.</p>
       </div>
     </div>
   </div>
@@ -1203,9 +1135,8 @@ section { position: relative; }
   <div class="cta-glow"></div>
   <div class="cta-content">
     <h2 class="cta-title r">Vamos<br>conversar<span style="color: var(--lime);">?</span></h2>
-    <p class="cta-desc r rd1">Conte o que você está tentando resolver. Sem compromisso, sem formulário extenso.</p>
-    <div class="cta-hand r rd2">uma conversa objetiva para entender se faz sentido ✦</div>
-    <div class="cta-actions r rd3">
+    <p class="cta-desc r rd1">Conte o que está tentando resolver. Uma conversa, sem compromisso.</p>
+    <div class="cta-actions r rd2">
       <a href="mailto:contato@uxin.design" class="btn-p">
         Enviar e-mail
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -1222,7 +1153,7 @@ section { position: relative; }
   <div class="footer-inner">
     <div>
       <div class="footer-brand"><svg viewBox="0 0 480 128" aria-hidden="true" role="presentation" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 16.5449 0 12.8174 1.21793 9.87707C2.84183 5.95662 5.95662 2.84183 9.87707 1.21793C12.8174 0 16.5449 0 24 0C31.4551 0 35.1826 0 38.1229 1.21793C42.0434 2.84183 45.1582 5.95662 46.7821 9.87707C48 12.8174 48 16.5449 48 24V64C48 72.8366 55.1634 80 64 80C72.8366 80 80 72.8366 80 64V24C80 16.5449 80 12.8174 81.2179 9.87707C82.8418 5.95662 85.9566 2.84183 89.8771 1.21793C92.8174 0 96.5449 0 104 0C111.455 0 115.183 0 118.123 1.21793C122.043 2.84183 125.158 5.95662 126.782 9.87707C128 12.8174 128 16.5449 128 24V102.4C128 111.361 128 115.841 126.256 119.264C124.722 122.274 122.274 124.722 119.264 126.256C115.841 128 111.361 128 102.4 128H47.9058C42.0356 128 39.1005 128 36.3384 127.337C33.8896 126.749 31.5485 125.779 29.4012 124.463C26.9792 122.979 24.9037 120.904 20.7529 116.753L11.2471 107.247C7.09626 103.096 5.02084 101.021 3.53664 98.5988C2.22075 96.4515 1.25104 94.1104 0.663122 91.6616C0 88.8995 0 85.9644 0 80.0942V24Z" fill="currentColor"/><path d="M144 25.4558C144 16.631 144 12.2186 145.693 8.83721C147.24 5.74661 149.747 3.24014 152.837 1.69285C156.219 0 160.631 0 169.456 0C173.31 0 175.238 0 177.053 0.428963C178.724 0.823868 180.32 1.48514 181.781 2.38742C183.368 3.36752 184.73 4.73029 187.456 7.45584L189.898 9.89806C196.234 16.2343 199.402 19.4025 203.056 20.5895C206.269 21.6336 209.731 21.6336 212.944 20.5895C216.598 19.4025 219.766 16.2343 226.102 9.89807L228.544 7.45584C231.27 4.73029 232.632 3.36752 234.219 2.38742C235.68 1.48514 237.276 0.823868 238.947 0.428963C240.762 0 242.69 0 246.544 0C255.369 0 259.781 0 263.163 1.69285C266.253 3.24014 268.76 5.74661 270.307 8.83721C272 12.2186 272 16.631 272 25.4558C272 29.3104 272 31.2376 271.571 33.0526C271.176 34.7236 270.515 36.32 269.613 37.7808C268.632 39.3675 267.27 40.7303 264.544 43.4558L262.102 45.8981C255.766 52.2343 252.598 55.4025 251.411 59.0557C250.366 62.2692 250.366 65.7308 251.411 68.9443C252.598 72.5975 255.766 75.7657 262.102 82.1019L264.544 84.5442C267.27 87.2697 268.632 88.6325 269.613 90.2192C270.515 91.68 271.176 93.2764 271.571 94.9474C272 96.7624 272 98.6896 272 102.544C272 111.369 272 115.781 270.307 119.163C268.76 122.253 266.253 124.76 263.163 126.307C259.781 128 255.369 128 246.544 128C242.69 128 240.762 128 238.947 127.571C237.276 127.176 235.68 126.515 234.219 125.613C232.632 124.632 231.27 123.27 228.544 120.544L226.102 118.102C219.766 111.766 216.598 108.598 212.944 107.411C209.731 106.366 206.269 106.366 203.056 107.411C199.402 108.598 196.234 111.766 189.898 118.102L187.456 120.544C184.73 123.27 183.368 124.632 181.781 125.613C180.32 126.515 178.724 127.176 177.053 127.571C175.238 128 173.31 128 169.456 128C160.631 128 156.219 128 152.837 126.307C149.747 124.76 147.24 122.253 145.693 119.163C144 115.781 144 111.369 144 102.544C144 98.6896 144 96.7624 144.429 94.9474C144.824 93.2764 145.485 91.68 146.387 90.2192C147.368 88.6325 148.73 87.2697 151.456 84.5442L153.898 82.1019C160.234 75.7657 163.402 72.5975 164.589 68.9443C165.634 65.7308 165.634 62.2692 164.589 59.0557C163.402 55.4025 160.234 52.2343 153.898 45.8981L151.456 43.4558C148.73 40.7303 147.368 39.3675 146.387 37.7808C145.485 36.32 144.824 34.7236 144.429 33.0526C144 31.2376 144 29.3104 144 25.4558Z" fill="currentColor"/><path d="M336 24C336 16.5449 336 12.8174 334.782 9.87707C333.158 5.95662 330.043 2.84183 326.123 1.21793C323.183 0 319.455 0 312 0C304.545 0 300.817 0 297.877 1.21793C293.957 2.84183 290.842 5.95662 289.218 9.87707C288 12.8174 288 16.5449 288 24V104C288 111.455 288 115.183 289.218 118.123C290.842 122.043 293.957 125.158 297.877 126.782C300.817 128 304.545 128 312 128C319.455 128 323.183 128 326.123 126.782C330.043 125.158 333.158 122.043 334.782 118.123C336 115.183 336 111.455 336 104V24Z" fill="currentColor"/><path d="M352 104C352 111.455 352 115.183 353.218 118.123C354.842 122.043 357.957 125.158 361.877 126.782C364.817 128 368.545 128 376 128C383.455 128 387.183 128 390.123 126.782C394.043 125.158 397.158 122.043 398.782 118.123C400 115.183 400 111.455 400 104V64C400 55.1634 407.163 48 416 48C424.837 48 432 55.1634 432 64V104C432 111.455 432 115.183 433.218 118.123C434.842 122.043 437.957 125.158 441.877 126.782C444.817 128 448.545 128 456 128C463.455 128 467.183 128 470.123 126.782C474.043 125.158 477.158 122.043 478.782 118.123C480 115.183 480 111.455 480 104V47.9058C480 42.0356 480 39.1005 479.337 36.3384C478.749 33.8896 477.779 31.5485 476.463 29.4012C474.979 26.9792 472.904 24.9037 468.753 20.7529L459.247 11.2471C455.096 7.09626 453.021 5.02084 450.599 3.53664C448.452 2.22075 446.11 1.25104 443.662 0.663122C440.899 0 437.964 0 432.094 0H377.6C368.639 0 364.159 0 360.736 1.7439C357.726 3.27787 355.278 5.72556 353.744 8.73615C352 12.1587 352 16.6392 352 25.6V104Z" fill="currentColor"/></svg></div>
-      <p class="footer-desc">Soluções digitais completas com DNA de experiência do usuário. Do conceito ao código, sem atrito.</p>
+      <p class="footer-desc">Produtos digitais com base em UX. Do conceito ao código.</p>
     </div>
     <div class="footer-col">
       <h4>Navegação</h4>
@@ -1247,7 +1178,6 @@ section { position: relative; }
   </div>
   <div class="footer-bottom">
     <p>&copy; 2026 UXIN. Todos os direitos reservados.</p>
-    <div class="footer-hand">feito com obsessão por experiência do usuário</div>
   </div>
 </footer>
 
@@ -1332,7 +1262,7 @@ document.addEventListener('keydown', e => {
   konamiSequence = konamiSequence.slice(-10);
   if (konamiSequence.join(',') === konamiCode.join(',')) {
     const msg = document.createElement('div');
-    msg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--lime);color:var(--black);padding:2rem 3rem;border-radius:16px;font-family:var(--font-hand);font-size:1.5rem;z-index:99999;animation:fadeUp 0.5s var(--ease)';
+    msg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--lime);color:var(--black);padding:2rem 3rem;border-radius:16px;font-family:var(--font-display);font-size:1.2rem;font-weight:700;z-index:99999;animation:fadeUp 0.5s var(--ease)';
     msg.textContent = 'Você encontrou o easter egg! 🎮 Valorizamos quem explora.';
     document.body.appendChild(msg);
     setTimeout(() => msg.remove(), 3000);
