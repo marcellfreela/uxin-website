@@ -447,6 +447,7 @@ section { position: relative; }
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
+  scroll-padding-inline-start: max(var(--edge), calc((100vw - min(1600px, 92vw)) / 2));
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   padding-bottom: var(--space-m);
@@ -831,6 +832,7 @@ section { position: relative; }
   .footer-bottom { max-width: min(2200px, 88vw); }
   .hero-glow { width: 1200px; height: 1200px; }
   .services-carousel::before { width: max(var(--edge), calc((100vw - min(2200px, 88vw)) / 2)); }
+  .services-carousel { scroll-padding-inline-start: max(var(--edge), calc((100vw - min(2200px, 88vw)) / 2)); }
 }
 
 /* Small tablets / large phones: single column everything */
