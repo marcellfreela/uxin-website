@@ -144,10 +144,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   transition: all 0.4s var(--ease);
 }
 .nav.scrolled {
-  background: rgba(10,10,10,0.9);
-  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
   padding: var(--space-xs) var(--edge);
   border-bottom: 1px solid var(--dark-border);
+}
+.nav.scrolled::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10,10,10,0.9);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  z-index: -1;
 }
 .nav-logo {
   display: flex; align-items: center; gap: 0.4rem;
