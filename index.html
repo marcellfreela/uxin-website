@@ -445,20 +445,20 @@ section { position: relative; }
   display: flex;
   gap: var(--grid-gap);
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  padding-left: calc(max(4vw, 50vw - 800px) + var(--edge));
+  padding-left: var(--edge);
+  padding-left: max(calc(4vw + var(--edge)), calc(50vw - 800px + var(--edge)));
   padding-right: clamp(4rem, 10vw, 12rem);
-  padding-bottom: 1.5rem;
+  padding-bottom: var(--space-m);
   margin-top: var(--space-m);
   cursor: grab;
 }
 .services-carousel.dragging { cursor: grabbing; scroll-snap-type: none; }
-.services-carousel::-webkit-scrollbar { height: 3px; }
-.services-carousel::-webkit-scrollbar-track { background: var(--dark-border); }
-.services-carousel::-webkit-scrollbar-thumb { background: var(--lime); border-radius: 2px; }
-.services-carousel { scrollbar-width: thin; scrollbar-color: var(--lime) var(--dark-border); }
+.services-carousel::-webkit-scrollbar { display: none; }
+.services-carousel { scrollbar-width: none; }
 
 .svc {
   background: var(--black); border: 1px solid var(--dark-border);
