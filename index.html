@@ -214,28 +214,6 @@ section { position: relative; }
 }
 
 /* Handwritten annotations */
-.hand-note {
-  font-family: var(--font-hand);
-  color: var(--lime);
-  font-size: var(--hand-md);
-  transform: rotate(-2deg);
-  display: inline-block;
-  position: relative;
-}
-.hand-note::after {
-  content: '';
-  position: absolute; bottom: -2px; left: 0; right: 0;
-  height: 2px;
-  background: var(--lime);
-  opacity: 0.3;
-  border-radius: 2px;
-}
-.hand-arrow {
-  font-family: var(--font-hand);
-  color: var(--lime);
-  font-size: 1.4rem;
-  opacity: 0.7;
-}
 
 /* ========== REVEAL ========== */
 .r {
@@ -332,17 +310,7 @@ section { position: relative; }
 .btn-g:hover { border-color: var(--gray); background: rgba(255,255,255,0.03); }
 
 /* hand-drawn annotation on hero */
-.hero-annotation {
-  position: absolute; right: 8%; top: 65%;
-  font-family: var(--font-hand); color: var(--lime);
-  font-size: 1.2rem; opacity: 0;
-  animation: fadeUp 0.7s var(--ease) 3s forwards;
-  transform: rotate(-5deg);
-}
-.hero-annotation svg {
-  display: block; margin-bottom: 0.3rem;
-}
-@media (max-width: 900px) { .hero-annotation { display: none; } }
+
 
 .hero-scroll {
   position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
@@ -399,10 +367,6 @@ section { position: relative; }
   line-height: 1.35 !important; letter-spacing: -0.01em;
   border-left: 3px solid var(--lime); padding-left: 1.5rem;
   margin: 2rem 0 !important; position: relative;
-}
-.manifesto-quote .hand-note {
-  position: absolute; top: -1.8rem; right: 0;
-  font-size: 1rem; transform: rotate(-3deg);
 }
 
 .manifesto-right { position: sticky; top: 8rem; }
@@ -506,10 +470,6 @@ section { position: relative; }
 .svc p { font-size: var(--text-base); color: var(--gray); line-height: 1.7; font-weight: 300; }
 
 /* hand note on services */
-.svc-hand {
-  font-family: var(--font-hand); font-size: var(--hand-sm); color: var(--lime);
-  margin-top: var(--space-xs); opacity: 0.7;
-}
 
 /* ========== PROCESS ========== */
 .process { background: var(--black); }
@@ -543,10 +503,6 @@ section { position: relative; }
 .step p { font-size: var(--text-base); color: var(--gray); line-height: 1.6; font-weight: 300; }
 
 /* hand note on process */
-.process-annotation {
-  text-align: center; margin-top: var(--space-m);
-  font-family: var(--font-hand); font-size: var(--hand-md); color: var(--lime); opacity: 0.7;
-}
 
 /* ========== BRANDS ========== */
 .brands { background: var(--dark); }
@@ -793,7 +749,7 @@ section { position: relative; }
   .r { opacity: 1; transform: none; }
   .hero-title .li { opacity: 1; transform: none; }
   .hero-hi, .hero-desc, .hero-actions { opacity: 1; }
-  .hero-annotation, .hero-scroll { opacity: 1; }
+  .hero-scroll { opacity: 1; }
   .loader { display: none; }
   .marquee-track { animation: none; }
 }
@@ -891,13 +847,6 @@ section { position: relative; }
       <a href="#services" class="btn-g">Ver o que fazemos</a>
     </div>
 
-    <div class="hero-annotation">
-      <svg width="40" height="30" viewBox="0 0 40 30" aria-hidden="true" fill="none" stroke="var(--lime)" stroke-width="1.5" stroke-linecap="round" opacity="0.5">
-        <path d="M35 2C25 2 15 8 10 18"/>
-        <path d="M6 15l4 5 5-3"/>
-      </svg>
-      <span style="font-family: var(--font-hand); color: var(--lime); opacity: 0.6; font-size: var(--hand-sm);">sim, tudo isso em um só lugar</span>
-    </div>
   </div>
   <div class="hero-scroll">
     <span>Scroll</span>
@@ -941,7 +890,6 @@ section { position: relative; }
 
         <div class="manifesto-quote r rd2">
           "Isso facilita ou complica a vida de quem vai usar?"
-          <span class="hand-note">↑ o filtro de cada decisão</span>
         </div>
 
         <p class="r rd3">A UXIN nasceu da convicção de que <strong>soluções digitais precisam funcionar para quem usa, não só para quem encomenda.</strong> Estratégia, design e tecnologia em um só lugar — do conceito ao código, em uma única responsabilidade.</p>
@@ -993,7 +941,6 @@ section { position: relative; }
       <div class="label r">O que fazemos</div>
       <h2 class="title r rd1">Da estratégia à entrega.</h2>
       <p class="r rd2" style="font-size: var(--text-lg); color: var(--gray-light); max-width: clamp(360px, 42vw, 700px); font-weight: 300; line-height: 1.75; margin-bottom: 1rem;">Cada projeto é único. Montamos o time certo, com as competências certas, para o desafio que você trouxer.</p>
-      <p class="r rd3 hand-note" style="margin-bottom: 1rem;">um ponto de contato, zero ruído entre fornecedores ✦</p>
     </div>
   </div>
 
@@ -1004,7 +951,6 @@ section { position: relative; }
         </div>
         <h3>Software & Apps</h3>
         <p>Sistemas web, aplicativos mobile, plataformas SaaS. Código limpo, arquitetura que escala, interface que dispensa manual.</p>
-        <div class="svc-hand">do back ao front, em uma única entrega</div>
       </div>
 
       <div class="svc r rd1">
@@ -1013,7 +959,6 @@ section { position: relative; }
         </div>
         <h3>Design de Produto</h3>
         <p>Interface, experiência, design system, prototipagem — tudo pensado para implementação real, testado com pessoas reais.</p>
-        <div class="svc-hand">cada decisão visual tem fundamento</div>
       </div>
 
       <div class="svc r rd2">
@@ -1030,7 +975,6 @@ section { position: relative; }
         </div>
         <h3>Pesquisa & Estratégia UX</h3>
         <p>Pesquisa com usuários, testes de usabilidade, auditorias de experiência, mapeamento de jornadas. Decisão baseada em evidência.</p>
-        <div class="svc-hand">escutar antes de propor</div>
       </div>
 
       <div class="svc r rd4">
@@ -1047,7 +991,6 @@ section { position: relative; }
         </div>
         <h3>Acessibilidade Digital</h3>
         <p>Auditorias WCAG, remediação, consultoria, treinamento. Acessibilidade não é feature — é requisito. Todas as entregas em conformidade.</p>
-        <div class="svc-hand">para todos, sem exceção</div>
       </div>
   </div>
 </section>
@@ -1087,7 +1030,6 @@ section { position: relative; }
       </div>
     </div>
 
-    <div class="process-annotation r rd5">↑ os passos 3 e 4 se repetem quantas vezes o projeto exigir</div>
   </div>
 </section>
 
@@ -1174,7 +1116,6 @@ section { position: relative; }
         <h2 class="title r rd1">Para todos.<br>Isso não é slogan.</h2>
         <p class="r rd2">No Brasil, mais de 18 milhões de pessoas têm alguma deficiência. Ignorar acessibilidade não é só negligência — é perder mercado, é risco jurídico, é entregar menos do que o mínimo aceitável.</p>
         <p class="r rd3"><strong>Na UXIN, acessibilidade não é um checklist no final do projeto.</strong> Entra no processo desde o primeiro wireframe. Quando entregamos, já está em conformidade com WCAG. Sem retrofit, sem custo extra, sem "fase 2".</p>
-        <p class="r rd4" style="font-family: var(--font-hand); color: var(--lime); font-size: var(--hand-sm); opacity: 0.8;">porque "ajustamos depois" nunca funciona</p>
       </div>
       <div class="access-visual r rd3">
         <div class="access-icon">
@@ -1211,7 +1152,7 @@ section { position: relative; }
 <section class="why pad" id="why">
   <div class="container">
     <div class="label r">Por que a UXIN</div>
-    <h2 class="title r rd1">E não outra empresa<span style="font-family: var(--font-hand); color: var(--lime); font-size: 0.6em; margin-left: 0.3em; transform: rotate(-3deg); display: inline-block;">(a pergunta certa)</span></h2>
+    <h2 class="title r rd1">E não outra empresa</h2>
 
     <div class="why-grid">
       <div class="why-c r">
