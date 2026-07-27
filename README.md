@@ -1,32 +1,21 @@
-# UXIN — Site Institucional
+# UXIN
 
-Site da UXIN, consultoria de soluções digitais com DNA de UX.
+Site institucional estático e responsivo, com foco no navegador de serviços.
 
-## Stack
+## Visualizar localmente
 
-- HTML / CSS / JS puro (single page)
-- Tipografia fluida com `clamp()` e CSS custom properties
-- Responsivo de 375px a 4K+
-- WCAG AA compliant
+Na raiz do projeto:
 
-## Estrutura
-
-```
-├── index.html          # Página principal
-├── assets/
-│   ├── logo.svg        # Logotipo UXIN
-│   └── accessibility-icon.svg
-└── README.md
+```powershell
+python -m http.server 4173
 ```
 
-## Desenvolvimento local
+Depois, abra `http://localhost:4173`.
 
-Abra `index.html` no navegador ou use um server local:
+## Direção visual
 
-```bash
-npx serve .
-```
-
-## Deploy
-
-Configurado para GitHub Pages (branch `main`, root `/`).
+- Outfit Bold em toda a interface.
+- Paleta principal `#FCFCFC` e `#1E1E1E`.
+- Tema automático via `prefers-color-scheme`.
+- Menu de serviços em acordeão.
+- Navegador de categorias com teclado, toque e controles visíveis.
