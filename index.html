@@ -1,1263 +1,377 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UXIN | Soluções Digitais com DNA de Design</title>
-<meta name="description" content="Softwares, apps, sites e jornadas digitais. Vinte anos de prática em UX, da pesquisa ao código.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-  /* Colors */
-  --lime: #D2FF00;
-  --lime-soft: #e4ff5c;
-  --lime-dim: #a8cc00;
-  --black: #0A0A0A;
-  --dark: #111111;
-  --dark-card: #161616;
-  --dark-border: #1e1e1e;
-  --gray: #999999;
-  --gray-light: #C2C2C2;
-  --white: #F0F0F0;
-  --warm: #FFF8E7;
-
-  /* Fonts */
-  --font-display: 'Outfit', sans-serif;
-  --font-mono: 'Space Mono', monospace;
-
-  /* Easing */
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-
-  /* Fluid spacing system — scales with viewport */
-  --space-xs: clamp(0.5rem, 0.4rem + 0.25vw, 0.75rem);
-  --space-s: clamp(0.75rem, 0.6rem + 0.5vw, 1.25rem);
-  --space-m: clamp(1.5rem, 1rem + 1.5vw, 3rem);
-  --space-l: clamp(3rem, 2rem + 3vw, 6rem);
-  --space-xl: clamp(5rem, 3rem + 5vw, 10rem);
-  --space-2xl: clamp(6rem, 4rem + 6vw, 14rem);
-
-  /* Fluid edge padding — content breathes from edges */
-  --edge: clamp(1.5rem, 1rem + 4vw, 8rem);
-
-  /* Fluid typography scale */
-  --text-xs: clamp(0.78rem, 0.7rem + 0.2vw, 0.95rem);
-  --text-sm: clamp(0.88rem, 0.8rem + 0.25vw, 1.05rem);
-  --text-base: clamp(1.05rem, 0.95rem + 0.35vw, 1.3rem);
-  --text-lg: clamp(1.15rem, 1rem + 0.5vw, 1.5rem);
-  --text-xl: clamp(1.3rem, 1.1rem + 0.6vw, 1.75rem);
-
-  /* Fluid display headings */
-  --heading-sm: clamp(1.5rem, 1.2rem + 1.2vw, 2.5rem);
-  --heading-md: clamp(2.2rem, 1.5rem + 2.5vw, 4.5rem);
-  --heading-lg: clamp(2.8rem, 1.5rem + 4.5vw, 7.5rem);
-
-  /* Fluid mono / label sizes */
-  --mono-sm: clamp(0.75rem, 0.65rem + 0.25vw, 0.95rem);
-  --mono-md: clamp(0.85rem, 0.75rem + 0.3vw, 1.1rem);
-
-  /* Fluid card radius */
-  --radius-sm: clamp(12px, 10px + 0.3vw, 18px);
-  --radius-md: clamp(16px, 12px + 0.4vw, 24px);
-
-  /* Fluid card padding */
-  --card-pad: clamp(1.8rem, 1.5rem + 1vw, 3.5rem);
-
-  /* Fluid gap */
-  --grid-gap: clamp(1rem, 0.8rem + 0.6vw, 2rem);
-}
-
-/* Resolution-aware base scaling for HiDPI / large monitors */
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 16px;
-}
-/* 2K+ monitors: slightly bump base font */
-@media (min-width: 2000px) { html { font-size: 18px; } }
-/* 4K / ultrawide: scale further */
-@media (min-width: 2560px) { html { font-size: 20px; } }
-@media (min-width: 3200px) { html { font-size: 22px; } }
-/* HiDPI screens at normal viewport widths: ensure readability */
-@media (min-resolution: 2dppx) and (min-width: 1400px) { html { font-size: 17px; } }
-@media (min-resolution: 2dppx) and (min-width: 2000px) { html { font-size: 19px; } }
-@media (min-resolution: 3dppx) { html { font-size: 18px; } }
-
-body {
-  font-family: var(--font-display);
-  background: var(--black);
-  color: var(--white);
-  overflow-x: hidden;
-}
-
-a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
-
-::selection { background: var(--lime); color: var(--black); }
-
-@keyframes fadeUp {
-  0% { opacity: 0; transform: translateY(16px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-
-
-/* ========== NAV ========== */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  padding: var(--space-s) var(--edge);
-  display: flex; align-items: center; justify-content: space-between;
-  transition: all 0.4s var(--ease);
-}
-.nav.scrolled {
-  padding: var(--space-xs) var(--edge);
-  border-bottom: 1px solid var(--dark-border);
-}
-.nav.scrolled::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(10,10,10,0.9);
-  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  z-index: -1;
-}
-.nav-logo {
-  display: flex; align-items: center; gap: 0.4rem;
-  transition: transform 0.3s var(--ease);
-}
-.nav-logo:hover { transform: scale(1.03); }
-.nav-logo svg { height: 28px; width: auto; color: var(--lime); }
-
-
-.nav-links { display: flex; gap: 2rem; align-items: center; }
-.nav-links a {
-  font-size: var(--text-sm); font-weight: 500; color: var(--gray-light);
-  transition: color 0.3s; position: relative;
-}
-.nav-links a:not(.nav-cta):hover { color: var(--white); }
-.nav-links .nav-cta, .nav-cta {
-  background: var(--lime); color: var(--black); padding: 0.6rem 1.5rem;
-  border-radius: 100px; font-weight: 700; font-size: var(--text-sm);
-  transition: transform 0.3s var(--ease), box-shadow 0.3s;
-}
-.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px color-mix(in srgb, var(--lime) 25%, transparent); }
-
-.nav-toggle { display: none; flex-direction: column; gap: 5px; width: 26px; z-index: 1001; }
-.nav-toggle span { display: block; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s; }
-.nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-toggle.active span:nth-child(2) { opacity: 0; }
-.nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-@media (max-width: 768px) {
-  .nav-toggle { display: flex; }
-  .nav-links {
-    position: fixed; inset: 0; background: var(--black);
-    flex-direction: column; justify-content: center; gap: var(--space-m);
-    opacity: 0; visibility: hidden; transition: all 0.4s;
-    overflow-y: auto;
-  }
-  .nav-links.open { opacity: 1; visibility: visible; }
-  .nav-links a { font-size: var(--text-xl); }
-}
-
-/* ========== SHARED ========== */
-section { position: relative; }
-.pad { padding: var(--space-xl) var(--edge); }
-.container { max-width: min(1600px, 92vw); margin: 0 auto; width: 100%; }
-
-.label {
-  font-family: var(--font-mono); font-size: var(--mono-md);
-  letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--lime); margin-bottom: var(--space-s);
-  display: flex; align-items: center; gap: 0.75rem;
-}
-.label::before { content: ''; width: 28px; height: 1px; background: var(--lime); }
-
-.title {
-  font-size: var(--heading-md);
-  font-weight: 800; line-height: 1.08; letter-spacing: -0.03em;
-  margin-bottom: var(--space-s);
-}
-
-/* ========== REVEAL ========== */
-.r {
-  opacity: 0; transform: translateY(50px);
-  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
-}
-.r.v { opacity: 1; transform: translateY(0); }
-.rd1 { transition-delay: 0.1s; }
-.rd2 { transition-delay: 0.2s; }
-.rd3 { transition-delay: 0.3s; }
-.rd4 { transition-delay: 0.4s; }
-.rd5 { transition-delay: 0.5s; }
-
-/* ========== HERO ========== */
-.hero {
-  min-height: 100vh; min-height: 100svh; display: flex; align-items: center;
-  position: relative; overflow: hidden; padding: var(--space-xl) var(--edge) var(--space-l);
-}
-
-
-.hero-glow {
-  position: absolute; width: 700px; height: 700px;
-  border-radius: 50%; filter: blur(200px); opacity: 0.1;
-  background: var(--lime); top: -150px; right: -150px;
-  animation: heroFloat 10s ease-in-out infinite alternate;
-}
-@keyframes heroFloat {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(-60px, 50px); }
-}
-.hero-grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(color-mix(in srgb, var(--lime) 2.5%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--lime) 2.5%, transparent) 1px, transparent 1px);
-  background-size: 80px 80px;
-  mask-image: radial-gradient(ellipse at 60% 40%, black 20%, transparent 65%);
-}
-
-.hero-content { position: relative; z-index: 1; max-width: min(1600px, 92vw); margin: 0 auto; width: 100%; }
-
-.hero-title {
-  font-size: var(--heading-lg);
-  font-weight: 900; line-height: 0.95; letter-spacing: -0.04em;
-  margin-bottom: 2rem;
-}
-.hero-title .line { display: block; overflow: hidden; padding-bottom: 0.15em; margin-bottom: -0.15em; }
-.hero-title .li {
-  display: block; opacity: 0; transform: translateY(100%);
-  animation: lineUp 0.9s var(--ease) forwards;
-}
-.hero-title .line:nth-child(1) .li { animation-delay: 1.6s; }
-.hero-title .line:nth-child(2) .li { animation-delay: 1.75s; }
-.hero-title .line:nth-child(3) .li { animation-delay: 1.9s; }
-@keyframes lineUp {
-  0% { opacity: 0; transform: translateY(100%); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-.hero-title .hl { color: var(--lime); }
-
-.hero-desc {
-  font-size: var(--text-lg); line-height: 1.75;
-  color: var(--gray-light); max-width: clamp(320px, 40vw, 680px); font-weight: 300;
-  opacity: 0; animation: fadeUp 0.7s var(--ease) 2.2s forwards;
-}
-
-.hero-actions {
-  display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
-  opacity: 0; animation: fadeUp 0.7s var(--ease) 2.5s forwards;
-}
-.btn-p {
-  background: var(--lime); color: var(--black); padding: 0.95rem 2.2rem;
-  border-radius: 100px; font-weight: 700; font-size: var(--text-base);
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  transition: transform 0.3s var(--ease), box-shadow 0.3s;
-}
-.btn-p:hover { transform: translateY(-3px); box-shadow: 0 12px 40px color-mix(in srgb, var(--lime) 25%, transparent); }
-.btn-p svg { transition: transform 0.3s var(--ease); }
-.btn-p:hover svg { transform: translateX(4px); }
-
-.btn-g {
-  border: 1.5px solid var(--dark-border); color: var(--white);
-  padding: 0.95rem 2.2rem; border-radius: 100px; font-weight: 500; font-size: var(--text-base);
-  transition: border-color 0.3s, background 0.3s;
-}
-.btn-g:hover { border-color: var(--gray); background: rgba(255,255,255,0.03); }
-
-.hero-scroll {
-  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
-  opacity: 0; animation: fadeUp 0.6s var(--ease) 3.2s forwards;
-}
-.hero-scroll span {
-  font-family: var(--font-mono); font-size: var(--text-xs);
-  letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray);
-}
-.scroll-bar {
-  width: 1px; height: 40px;
-  background: linear-gradient(to bottom, var(--lime), transparent);
-  animation: scrollPulse 2s ease-in-out infinite;
-}
-@keyframes scrollPulse {
-  0%, 100% { opacity: 0.2; transform: scaleY(0.5); }
-  50% { opacity: 1; transform: scaleY(1); }
-}
-
-/* ========== MARQUEE ========== */
-.marquee {
-  border-top: 1px solid var(--dark-border);
-  border-bottom: 1px solid var(--dark-border);
-  padding: 1.4rem 0; overflow: hidden;
-}
-.marquee-track {
-  display: flex; animation: mScroll 35s linear infinite; width: max-content;
-}
-@keyframes mScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-.marquee-item {
-  font-size: var(--text-base); font-weight: 500; color: var(--gray);
-  white-space: nowrap; padding: 0 var(--space-m);
-  display: flex; align-items: center; gap: 2rem;
-}
-.marquee-item .dot { width: 4px; height: 4px; background: var(--lime); border-radius: 50%; }
-
-/* ========== MANIFESTO ========== */
-.manifesto { background: var(--black); }
-.manifesto-inner {
-  display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--space-l); align-items: start;
-}
-@media (max-width: 900px) { .manifesto-inner { grid-template-columns: 1fr; gap: var(--space-m); } }
-
-.manifesto-text p {
-  font-size: var(--text-lg); line-height: 1.8;
-  color: var(--gray-light); font-weight: 300; margin-bottom: 1.5rem;
-}
-.manifesto-text p strong { color: var(--white); font-weight: 600; }
-
-
-.manifesto-right { position: sticky; top: 8rem; }
-
-.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gap); }
-.stat {
-  background: var(--dark-card); border: 1px solid var(--dark-border);
-  border-top: 2px solid var(--lime);
-  border-radius: var(--radius-md); padding: var(--card-pad);
-  transition: border-color 0.3s, transform 0.3s var(--ease), background 0.3s;
-  position: relative; overflow: hidden;
-}
-.stat::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at top left, color-mix(in srgb, var(--lime) 4%, transparent) 0%, transparent 60%);
-  pointer-events: none;
-}
-.stat:hover { border-color: color-mix(in srgb, var(--lime) 40%, transparent); transform: translateY(-3px); background: rgba(22,22,22,0.9); }
-.stat-num {
-  font-size: var(--heading-md); font-weight: 900;
-  color: var(--lime); letter-spacing: -0.04em; line-height: 1; margin-bottom: 0.6rem;
-  font-family: var(--font-display);
-}
-.stat-txt { font-size: var(--text-base); color: var(--gray-light); line-height: 1.5; font-weight: 300; }
-
-
-/* ========== SERVICES ========== */
-.services { background: var(--dark); overflow: hidden; padding-bottom: var(--space-xl); }
-.services-carousel {
-  display: flex;
-  gap: var(--grid-gap);
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline-start: max(var(--edge), calc((100vw - min(1600px, 92vw)) / 2));
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: var(--space-m);
-  padding-left: max(var(--edge), calc((100vw - min(1600px, 92vw)) / 2));
-  margin-top: var(--space-m);
-  cursor: grab;
-}
-.services-carousel::after {
-  content: '';
-  display: block;
-  flex-shrink: 0;
-  width: clamp(4rem, 10vw, 12rem);
-  min-width: 4rem;
-}
-.services-carousel.dragging { cursor: grabbing; scroll-snap-type: none; }
-.services-carousel::-webkit-scrollbar { display: none; }
-.services-carousel { scrollbar-width: none; }
-
-.svc {
-  background: var(--black); border: 1px solid var(--dark-border);
-  border-radius: var(--radius-md); padding: var(--card-pad);
-  transition: border-color 0.4s, transform 0.4s var(--ease);
-  position: relative; overflow: hidden;
-  flex: 0 0 clamp(280px, 32vw, 460px);
-  scroll-snap-align: start;
-}
-.svc::after {
-  content: ''; position: absolute; top: 0; left: 0;
-  width: 100%; height: 2px; background: var(--lime);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 0.5s var(--ease);
-}
-.svc:hover { border-color: color-mix(in srgb, var(--lime) 15%, transparent); }
-.svc:hover::after { transform: scaleX(1); }
-
-.svc-icon {
-  width: clamp(56px, 4vw, 72px); height: clamp(56px, 4vw, 72px); border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--lime) 10%, transparent);
-  border: 1px solid color-mix(in srgb, var(--lime) 12%, transparent);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: var(--space-s); color: var(--lime);
-  transition: background 0.3s, border-color 0.3s;
-}
-.svc:hover .svc-icon {
-  background: color-mix(in srgb, var(--lime) 15%, transparent);
-  border-color: color-mix(in srgb, var(--lime) 25%, transparent);
-}
-.svc-icon svg { width: 26px; height: 26px; }
-
-.svc h3 { font-size: var(--heading-sm); font-weight: 700; margin-bottom: var(--space-xs); letter-spacing: -0.02em; line-height: 1.2; }
-.svc p { font-size: var(--text-base); color: var(--gray); line-height: 1.7; font-weight: 300; }
-
-/* ========== PROCESS ========== */
-.process { background: var(--black); }
-.process-steps {
-  display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: var(--space-m);
-  position: relative;
-}
-.process-steps::before {
-  content: ''; position: absolute; top: 32px; left: 8%; right: 8%;
-  height: 2px; background: var(--dark-border);
-}
-@media (max-width: 900px) {
-  .process-steps { grid-template-columns: 1fr; gap: var(--space-m); }
-  .process-steps::before { display: none; }
-}
-.step { text-align: center; position: relative; padding: 0 0.8rem; }
-.step-n {
-  width: clamp(56px, 4.5vw, 88px); height: clamp(56px, 4.5vw, 88px); border-radius: 50%;
-  background: var(--dark-card); border: 2px solid var(--dark-border);
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 1.3rem; font-family: var(--font-mono);
-  font-size: var(--text-base); font-weight: 700; color: var(--lime);
-  position: relative; z-index: 1;
-  transition: border-color 0.3s, background 0.3s, transform 0.3s var(--ease-bounce);
-}
-.step:hover .step-n {
-  border-color: var(--lime); background: color-mix(in srgb, var(--lime) 8%, transparent);
-  transform: scale(1.1);
-}
-.step h3 { font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-xs); }
-.step p { font-size: var(--text-base); color: var(--gray); line-height: 1.6; font-weight: 300; }
-
-/* ========== BRANDS ========== */
-.brands { background: var(--dark); }
-.brands-intro {
-  font-size: var(--text-lg); color: var(--gray-light);
-  line-height: 1.75; max-width: clamp(400px, 45vw, 780px); margin-bottom: var(--space-m); font-weight: 300;
-}
-
-.segments-row {
-  display: flex; flex-wrap: wrap; gap: var(--space-xs);
-  margin-bottom: var(--space-l);
-}
-.segment-tag {
-  font-family: var(--font-mono); font-size: var(--mono-sm);
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--lime); padding: 0.5rem 1.1rem;
-  border: 1px solid color-mix(in srgb, var(--lime) 25%, transparent);
-  border-radius: 999px;
-  transition: background 0.2s, border-color 0.2s;
-}
-.segment-tag:hover { background: color-mix(in srgb, var(--lime) 6%, transparent); border-color: color-mix(in srgb, var(--lime) 50%, transparent); }
-
-.brands-logos-wrap {
-  border-top: 1px solid var(--dark-border);
-  padding-top: var(--space-m);
-  margin-bottom: var(--space-m);
-}
-.brands-context {
-  font-size: var(--text-sm); color: var(--gray);
-  margin-bottom: var(--space-m); font-style: italic;
-}
-.brand-logos {
-  display: flex; flex-wrap: wrap; gap: clamp(1.5rem, 2.5vw, 3rem);
-  align-items: center; justify-content: flex-start;
-}
-.brand-logo-item {
-  display: flex; align-items: center; justify-content: center;
-  min-height: 44px; min-width: 44px;
-}
-.brand-logo {
-  height: clamp(24px, 2.5vw, 36px); width: auto; max-width: clamp(90px, 10vw, 140px);
-  object-fit: contain;
-  filter: grayscale(1) brightness(10); opacity: 0.35;
-  transition: opacity 0.3s, filter 0.3s;
-}
-.brand-logo:hover { opacity: 0.75; filter: grayscale(0.3) brightness(1.2); }
-
-.brands-countries {
-  margin-top: var(--space-m); display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center;
-  padding-top: var(--space-m); border-top: 1px solid var(--dark-border);
-}
-.country-tag {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-size: var(--text-base); color: var(--gray-light);
-}
-.country-flag {
-  display: block; border-radius: 2px;
-}
-
-/* ========== ACCESSIBILITY ========== */
-.access { background: var(--black); }
-.access-grid {
-  display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-l); align-items: center;
-}
-@media (max-width: 900px) { .access-grid { grid-template-columns: 1fr; } }
-.access-text p {
-  font-size: var(--text-lg); line-height: 1.8;
-  color: var(--gray-light); font-weight: 300; margin-bottom: 1.5rem;
-}
-.access-text strong { color: var(--white); font-weight: 600; }
-
-.access-visual {
-  background: var(--dark-card); border: 1px solid var(--dark-border);
-  border-radius: var(--radius-md); padding: var(--card-pad); text-align: center;
-  position: relative; overflow: hidden;
-}
-.access-visual::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--lime) 4%, transparent), transparent 70%);
-}
-.access-icon {
-  width: clamp(88px, 7vw, 110px); height: clamp(88px, 7vw, 110px); margin: 0 auto var(--space-s);
-  position: relative; z-index: 1;
-}
-.access-icon svg { width: 100%; height: 100%; }
-.access-h { font-size: var(--heading-sm); font-weight: 800; margin-bottom: 0.4rem; position: relative; z-index: 1; }
-.access-sub { font-size: var(--text-base); color: var(--gray); font-weight: 300; position: relative; z-index: 1; }
-/* ========== WHY ========== */
-.why { background: var(--dark); }
-.why-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr);
-  gap: var(--grid-gap); margin-top: var(--space-m);
-}
-@media (max-width: 768px) { .why-grid { grid-template-columns: 1fr; } }
-
-.why-c {
-  background: var(--black); border: 1px solid var(--dark-border);
-  border-radius: var(--radius-md);
-  padding: var(--card-pad);
-  padding-top: clamp(2.5rem, 3vw, 4rem);
-  transition: border-color 0.4s, transform 0.4s var(--ease);
-  position: relative; overflow: hidden;
-}
-.why-c:hover {
-  border-color: color-mix(in srgb, var(--lime) 20%, transparent);
-  transform: translateY(-4px);
-}
-
-/* Accent line top */
-.why-c::before {
-  content: '';
-  position: absolute; top: 0; left: 0;
-  width: 100%; height: 3px;
-  background: linear-gradient(90deg, var(--lime), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.4s;
-}
-.why-c:hover::before { opacity: 1; }
-
-/* Large number as visual anchor */
-.why-num {
-  font-family: var(--font-mono);
-  font-size: clamp(0.85rem, 1vw, 1.1rem);
-  font-weight: 700;
-  color: var(--lime);
-  letter-spacing: 0.05em;
-  margin-bottom: var(--space-s);
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-.why-num::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--lime) 25%, transparent), transparent);
-}
-
-.why-c h3 {
-  font-size: var(--text-xl); font-weight: 700;
-  margin-bottom: var(--space-xs); line-height: 1.2;
-}
-.why-c p {
-  font-size: var(--text-base); color: var(--gray);
-  line-height: 1.7; font-weight: 300;
-}
-
-/* ========== NUMBERS ========== */
-.numbers { background: var(--black); border-top: 1px solid var(--dark-border); border-bottom: 1px solid var(--dark-border); }
-.numbers-inner {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-l);
-  text-align: center;
-}
-@media (max-width: 640px) { .numbers-inner { grid-template-columns: 1fr; gap: 2rem; } }
-.num-item {}
-.num-val {
-  font-size: var(--heading-sm); font-weight: 900;
-  color: var(--lime); letter-spacing: -0.03em; line-height: 1;
-  margin-bottom: 0.5rem;
-}
-.num-desc { font-size: var(--text-base); color: var(--gray); line-height: 1.6; font-weight: 300; }
-.num-source { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--gray); opacity: 0.6; margin-top: 0.3rem; }
-
-/* ========== CTA ========== */
-.cta {
-  text-align: center; padding: var(--space-2xl) var(--edge); position: relative; overflow: hidden;
-  background: var(--black);
-}
-.cta-glow {
-  position: absolute; width: 500px; height: 500px;
-  border-radius: 50%; filter: blur(200px); opacity: 0.07;
-  background: var(--lime); top: 50%; left: 50%; transform: translate(-50%,-50%);
-}
-.cta-content { position: relative; z-index: 1; }
-.cta-title {
-  font-size: var(--heading-lg); font-weight: 900;
-  letter-spacing: -0.04em; line-height: 1; margin-bottom: 1.5rem;
-}
-.cta-desc {
-  font-size: var(--text-lg); color: var(--gray-light);
-  max-width: clamp(320px, 35vw, 580px); margin: 0 auto 1rem; line-height: 1.7; font-weight: 300;
-}
-.cta-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-
-/* ========== FOOTER ========== */
-.footer {
-  border-top: 1px solid var(--dark-border); padding: var(--space-l) var(--edge) var(--space-m);
-  background: var(--black);
-}
-.footer-inner {
-  max-width: min(1600px, 92vw); margin: 0 auto;
-  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: var(--space-m);
-}
-@media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; } }
-.footer-brand { margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
-.footer-brand svg { height: 24px; width: auto; color: var(--lime); }
-
-.footer-desc { font-size: var(--text-base); color: var(--gray); line-height: 1.6; max-width: clamp(240px, 20vw, 400px); }
-.footer-col h4 {
-  font-size: var(--mono-sm); font-family: var(--font-mono);
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--lime); margin-bottom: 1rem;
-}
-.footer-col a { display: block; font-size: var(--text-base); color: var(--gray); padding: var(--space-xs) 0; transition: color 0.3s; }
-.footer-col a:hover { color: var(--white); }
-.footer-bottom {
-  max-width: min(1600px, 92vw); margin: var(--space-m) auto 0; padding-top: var(--space-s);
-  border-top: 1px solid var(--dark-border);
-  display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1rem;
-}
-.footer-bottom p { font-size: var(--text-sm); color: var(--gray); }
-
-/* ========== WCAG AA COMPLIANCE ========== */
-
-/* Skip to content link */
-.skip-link {
-  position: absolute; top: -100%; left: 1rem;
-  background: var(--lime); color: var(--black);
-  padding: 0.75rem 1.5rem; border-radius: 0 0 8px 8px;
-  font-weight: 700; font-size: 1rem; z-index: 10001;
-  transition: top 0.2s;
-  text-decoration: none;
-}
-.skip-link:focus { top: 0; }
-
-/* Focus-visible indicators for all interactive elements */
-*:focus { outline: none; }
-*:focus-visible {
-  outline: 2px solid var(--lime);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-.nav-cta:focus-visible, .btn-p:focus-visible, .btn-g:focus-visible {
-  outline-offset: 4px;
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--lime) 30%, transparent);
-}
-.svc:focus-within, .stat:focus-within, .why-c:focus-within {
-  outline: 2px solid var(--lime);
-  outline-offset: 2px;
-}
-
-/* Reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-  .r { opacity: 1; transform: none; }
-  .hero-title .li { opacity: 1; transform: none; }
-  .hero-hi, .hero-desc, .hero-actions { opacity: 1; }
-  .hero-scroll { opacity: 1; }
-  .marquee-track { animation: none; }
-}
-
-/* Ensure minimum touch target size 44x44px (WCAG 2.5.5 AAA / 24px for AA 2.5.8) */
-.nav-links a { min-height: 44px; display: inline-flex; align-items: center; }
-.footer-col a { min-height: 44px; display: flex; align-items: center; }
-.nav-toggle { min-width: 44px; min-height: 44px; justify-content: center; align-items: center; cursor: pointer; }
-.nav-toggle span { width: 26px; }
-
-/* High contrast mode support */
-@media (forced-colors: active) {
-  .btn-p, .nav-cta { border: 2px solid ButtonText; }
-  .svc, .stat, .why-c { border: 1px solid CanvasText; }
-}
-
-/* ========== LARGE SCREEN ENHANCEMENTS ========== */
-
-/* Wide monitors: expand grids */
-@media (min-width: 1600px) {
-  .brands-grid { grid-template-columns: repeat(4, 1fr); }
-  .why-grid { grid-template-columns: repeat(2, 1fr); }
-  .manifesto-inner { gap: var(--space-l); }
-  .access-grid { gap: var(--space-l); }
-}
-
-/* Ultrawide */
-@media (min-width: 2000px) {
-  .why-grid { grid-template-columns: repeat(2, 1fr); }
-  .brands-grid { grid-template-columns: repeat(4, 1fr); }
-  .numbers-inner { grid-template-columns: repeat(3, 1fr); }
-  .stat-grid { gap: var(--grid-gap); }
-}
-
-/* True 4K+ */
-@media (min-width: 2560px) {
-  .container { max-width: min(2200px, 88vw); }
-  .hero-content { max-width: min(2200px, 88vw); }
-  .footer-inner { max-width: min(2200px, 88vw); }
-  .footer-bottom { max-width: min(2200px, 88vw); }
-  .hero-glow { width: 1200px; height: 1200px; }
-  .services-carousel { padding-left: max(var(--edge), calc((100vw - min(2200px, 88vw)) / 2)); scroll-padding-inline-start: max(var(--edge), calc((100vw - min(2200px, 88vw)) / 2)); }
-}
-
-/* Small tablets / large phones: single column everything */
-@media (max-width: 640px) {
-  .numbers-inner { grid-template-columns: 1fr; }
-  .stat-grid { grid-template-columns: 1fr; }
-}
-
-</style>
-<script>
-(function(){
-  var palettes=[
-    {main:'#D2FF00',soft:'#e4ff5c',dim:'#a8cc00'}, /* lime original */
-    {main:'#00D4FF',soft:'#5ce5ff',dim:'#00a8cc'}, /* ciano */
-    {main:'#FF006E',soft:'#ff5ca0',dim:'#cc0058'}, /* rosa */
-    {main:'#C060FF',soft:'#d494ff',dim:'#9040cc'}, /* roxo */
-    {main:'#FF6B00',soft:'#ff9a5c',dim:'#cc5500'}, /* laranja */
-    {main:'#00FF88',soft:'#5cffb4',dim:'#00cc6b'}, /* verde-menta */
-    {main:'#FFD200',soft:'#ffe45c',dim:'#cca800'}  /* amarelo */
-  ];
-  var p=palettes[Math.floor(Math.random()*palettes.length)];
-  var s=document.documentElement.style;
-  s.setProperty('--lime',p.main);
-  s.setProperty('--lime-soft',p.soft);
-  s.setProperty('--lime-dim',p.dim);
-})();
-</script>
-</head>
-<body>
-
-<a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
-
-<!-- Nav -->
-<nav class="nav" id="nav">
-  <a href="#" class="nav-logo" aria-label="UXIN, página inicial"><svg viewBox="0 0 480 128" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 16.5449 0 12.8174 1.21793 9.87707C2.84183 5.95662 5.95662 2.84183 9.87707 1.21793C12.8174 0 16.5449 0 24 0C31.4551 0 35.1826 0 38.1229 1.21793C42.0434 2.84183 45.1582 5.95662 46.7821 9.87707C48 12.8174 48 16.5449 48 24V64C48 72.8366 55.1634 80 64 80C72.8366 80 80 72.8366 80 64V24C80 16.5449 80 12.8174 81.2179 9.87707C82.8418 5.95662 85.9566 2.84183 89.8771 1.21793C92.8174 0 96.5449 0 104 0C111.455 0 115.183 0 118.123 1.21793C122.043 2.84183 125.158 5.95662 126.782 9.87707C128 12.8174 128 16.5449 128 24V102.4C128 111.361 128 115.841 126.256 119.264C124.722 122.274 122.274 124.722 119.264 126.256C115.841 128 111.361 128 102.4 128H47.9058C42.0356 128 39.1005 128 36.3384 127.337C33.8896 126.749 31.5485 125.779 29.4012 124.463C26.9792 122.979 24.9037 120.904 20.7529 116.753L11.2471 107.247C7.09626 103.096 5.02084 101.021 3.53664 98.5988C2.22075 96.4515 1.25104 94.1104 0.663122 91.6616C0 88.8995 0 85.9644 0 80.0942V24Z" fill="currentColor"/><path d="M144 25.4558C144 16.631 144 12.2186 145.693 8.83721C147.24 5.74661 149.747 3.24014 152.837 1.69285C156.219 0 160.631 0 169.456 0C173.31 0 175.238 0 177.053 0.428963C178.724 0.823868 180.32 1.48514 181.781 2.38742C183.368 3.36752 184.73 4.73029 187.456 7.45584L189.898 9.89806C196.234 16.2343 199.402 19.4025 203.056 20.5895C206.269 21.6336 209.731 21.6336 212.944 20.5895C216.598 19.4025 219.766 16.2343 226.102 9.89807L228.544 7.45584C231.27 4.73029 232.632 3.36752 234.219 2.38742C235.68 1.48514 237.276 0.823868 238.947 0.428963C240.762 0 242.69 0 246.544 0C255.369 0 259.781 0 263.163 1.69285C266.253 3.24014 268.76 5.74661 270.307 8.83721C272 12.2186 272 16.631 272 25.4558C272 29.3104 272 31.2376 271.571 33.0526C271.176 34.7236 270.515 36.32 269.613 37.7808C268.632 39.3675 267.27 40.7303 264.544 43.4558L262.102 45.8981C255.766 52.2343 252.598 55.4025 251.411 59.0557C250.366 62.2692 250.366 65.7308 251.411 68.9443C252.598 72.5975 255.766 75.7657 262.102 82.1019L264.544 84.5442C267.27 87.2697 268.632 88.6325 269.613 90.2192C270.515 91.68 271.176 93.2764 271.571 94.9474C272 96.7624 272 98.6896 272 102.544C272 111.369 272 115.781 270.307 119.163C268.76 122.253 266.253 124.76 263.163 126.307C259.781 128 255.369 128 246.544 128C242.69 128 240.762 128 238.947 127.571C237.276 127.176 235.68 126.515 234.219 125.613C232.632 124.632 231.27 123.27 228.544 120.544L226.102 118.102C219.766 111.766 216.598 108.598 212.944 107.411C209.731 106.366 206.269 106.366 203.056 107.411C199.402 108.598 196.234 111.766 189.898 118.102L187.456 120.544C184.73 123.27 183.368 124.632 181.781 125.613C180.32 126.515 178.724 127.176 177.053 127.571C175.238 128 173.31 128 169.456 128C160.631 128 156.219 128 152.837 126.307C149.747 124.76 147.24 122.253 145.693 119.163C144 115.781 144 111.369 144 102.544C144 98.6896 144 96.7624 144.429 94.9474C144.824 93.2764 145.485 91.68 146.387 90.2192C147.368 88.6325 148.73 87.2697 151.456 84.5442L153.898 82.1019C160.234 75.7657 163.402 72.5975 164.589 68.9443C165.634 65.7308 165.634 62.2692 164.589 59.0557C163.402 55.4025 160.234 52.2343 153.898 45.8981L151.456 43.4558C148.73 40.7303 147.368 39.3675 146.387 37.7808C145.485 36.32 144.824 34.7236 144.429 33.0526C144 31.2376 144 29.3104 144 25.4558Z" fill="currentColor"/><path d="M336 24C336 16.5449 336 12.8174 334.782 9.87707C333.158 5.95662 330.043 2.84183 326.123 1.21793C323.183 0 319.455 0 312 0C304.545 0 300.817 0 297.877 1.21793C293.957 2.84183 290.842 5.95662 289.218 9.87707C288 12.8174 288 16.5449 288 24V104C288 111.455 288 115.183 289.218 118.123C290.842 122.043 293.957 125.158 297.877 126.782C300.817 128 304.545 128 312 128C319.455 128 323.183 128 326.123 126.782C330.043 125.158 333.158 122.043 334.782 118.123C336 115.183 336 111.455 336 104V24Z" fill="currentColor"/><path d="M352 104C352 111.455 352 115.183 353.218 118.123C354.842 122.043 357.957 125.158 361.877 126.782C364.817 128 368.545 128 376 128C383.455 128 387.183 128 390.123 126.782C394.043 125.158 397.158 122.043 398.782 118.123C400 115.183 400 111.455 400 104V64C400 55.1634 407.163 48 416 48C424.837 48 432 55.1634 432 64V104C432 111.455 432 115.183 433.218 118.123C434.842 122.043 437.957 125.158 441.877 126.782C444.817 128 448.545 128 456 128C463.455 128 467.183 128 470.123 126.782C474.043 125.158 477.158 122.043 478.782 118.123C480 115.183 480 111.455 480 104V47.9058C480 42.0356 480 39.1005 479.337 36.3384C478.749 33.8896 477.779 31.5485 476.463 29.4012C474.979 26.9792 472.904 24.9037 468.753 20.7529L459.247 11.2471C455.096 7.09626 453.021 5.02084 450.599 3.53664C448.452 2.22075 446.11 1.25104 443.662 0.663122C440.899 0 437.964 0 432.094 0H377.6C368.639 0 364.159 0 360.736 1.7439C357.726 3.27787 355.278 5.72556 353.744 8.73615C352 12.1587 352 16.6392 352 25.6V104Z" fill="currentColor"/></svg></a>
-  <div class="nav-links" id="navLinks" role="navigation" aria-label="Navegação principal">
-    <a href="#manifesto">Sobre</a>
-    <a href="#services">Serviços</a>
-    <a href="#process">Processo</a>
-    <a href="#brands">Trajetória</a>
-    <a href="#contact" class="nav-cta">Vamos conversar</a>
-  </div>
-  <button class="nav-toggle" id="navToggle" aria-label="Menu de navegação" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
-</nav>
-
-<main id="main-content">
-<!-- ========== HERO ========== -->
-<section class="hero" id="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-content">
-    <h1 class="hero-title">
-      <span class="line"><span class="li">Produtos digitais</span></span>
-      <span class="line"><span class="li">que <span class="hl">funcionam.</span></span></span>
-    </h1>
-    <p class="hero-desc">
-      Softwares, apps, sites e jornadas digitais. Vinte anos de prática em UX, da pesquisa ao código.
-    </p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn-p">
-        Iniciar conversa
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="UXIN — produtos e experiências digitais construídos com estratégia, design e tecnologia."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FCFCFC" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1E1E1E" />
+    <title>UXIN — Produtos digitais que funcionam</title>
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E1E1E'/><path d='M8 9v8a4 4 0 0 0 8 0V9h4v8a8 8 0 0 1-16 0V9z' fill='%23FCFCFC'/></svg>"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Pular para o conteúdo principal</a>
+
+    <svg class="svg-sprite" aria-hidden="true">
+      <symbol id="uxin-logo" viewBox="0 0 120 32">
+        <path
+          d="M0 6C0 4.13623 0 3.20435 0.304482 2.46927C0.710458 1.48915 1.48915 0.710458 2.46927 0.304482C3.20435 0 4.13623 0 6 0C7.86377 0 8.79565 0 9.53073 0.304482C10.5108 0.710458 11.2895 1.48915 11.6955 2.46927C12 3.20435 12 4.13623 12 6V16C12 18.2091 13.7909 20 16 20C18.2091 20 20 18.2091 20 16V6C20 4.13623 20 3.20435 20.3045 2.46927C20.7105 1.48915 21.4892 0.710458 22.4693 0.304482C23.2044 0 24.1362 0 26 0C27.8638 0 28.7956 0 29.5307 0.304482C30.5108 0.710458 31.2895 1.48915 31.6955 2.46927C32 3.20435 32 4.13623 32 6V25.6C32 27.8402 32 28.9603 31.564 29.816C31.1805 30.5686 30.5686 31.1805 29.816 31.564C28.9603 32 27.8402 32 25.6 32H11.9764C10.5089 32 9.77513 32 9.08461 31.8342C8.47239 31.6872 7.88712 31.4448 7.35029 31.1158C6.74479 30.7448 6.22594 30.2259 5.18823 29.1882L2.81178 26.8118C1.77406 25.7741 1.25521 25.2552 0.884159 24.6497C0.555187 24.1129 0.312761 23.5276 0.16578 22.9154C0 22.2249 0 21.4911 0 20.0236V6Z"
+        />
+        <path
+          d="M36 6.36396C36 4.15775 36 3.05464 36.4232 2.2093C36.81 1.43665 37.4367 0.810035 38.2093 0.423213C39.0546 0 40.1577 0 42.364 0C43.3276 0 43.8094 0 44.2632 0.107241C44.6809 0.205967 45.08 0.371286 45.4452 0.596855C45.8419 0.841879 46.1826 1.18257 46.864 1.86396L47.4745 2.47452C49.0586 4.05858 49.8506 4.85062 50.7639 5.14737C51.5673 5.4084 52.4327 5.4084 53.2361 5.14737C54.1494 4.85062 54.9414 4.05858 56.5255 2.47452L57.136 1.86396C57.8174 1.18257 58.1581 0.841879 58.5548 0.596855C58.92 0.371286 59.3191 0.205967 59.7368 0.107241C60.1906 0 60.6724 0 61.636 0C63.8423 0 64.9454 0 65.7907 0.423213C66.5633 0.810035 67.19 1.43665 67.5768 2.2093C68 3.05464 68 4.15775 68 6.36396C68 7.32759 68 7.8094 67.8928 8.26316C67.794 8.68089 67.6287 9.08 67.4031 9.44519C67.1581 9.84188 66.8174 10.1826 66.136 10.864L65.5255 11.4745C63.9414 13.0586 63.1494 13.8506 62.8526 14.7639C62.5916 15.5673 62.5916 16.4327 62.8526 17.2361C63.1494 18.1494 63.9414 18.9414 65.5255 20.5255L66.136 21.136C66.8174 21.8174 67.1581 22.1581 67.4031 22.5548C67.6287 22.92 67.794 23.3191 67.8928 23.7368C68 24.1906 68 24.6724 68 25.636C68 27.8423 68 28.9454 67.5768 29.7907C67.19 30.5633 66.5633 31.19 65.7907 31.5768C64.9454 32 63.8423 32 61.636 32C60.6724 32 60.1906 32 59.7368 31.8928C59.3191 31.794 58.92 31.6287 58.5548 31.4031C58.1581 31.1581 57.8174 30.8174 57.136 30.136L56.5255 29.5255C54.9414 27.9414 54.1494 27.1494 53.2361 26.8526C52.4327 26.5916 51.5673 26.5916 50.7639 26.8526C49.8506 27.1494 49.0586 27.9414 47.4745 29.5255L46.864 30.136C46.1826 30.8174 45.8419 31.1581 45.4452 31.4031C45.08 31.6287 44.6809 31.794 44.2632 31.8928C43.8094 32 43.3276 32 42.364 32C40.1577 32 39.0546 32 38.2093 31.5768C37.4367 31.19 36.81 30.5633 36.4232 29.7907C36 28.9454 36 27.8423 36 25.636C36 24.6724 36 24.1906 36.1072 23.7368C36.206 23.3191 36.3713 22.92 36.5969 22.5548C36.8419 22.1581 37.1826 21.8174 37.864 21.136L38.4745 20.5255C40.0586 18.9414 40.8506 18.1494 41.1474 17.2361C41.4084 16.4327 41.4084 15.5673 41.1474 14.7639C40.8506 13.8506 40.0586 13.0586 38.4745 11.4745L37.864 10.864C37.1826 10.1826 36.8419 9.84188 36.5969 9.44519C36.3713 9.08 36.206 8.68089 36.1072 8.26316C36 7.8094 36 7.32759 36 6.36396Z"
+        />
+        <path
+          d="M84 6C84 4.13623 84 3.20435 83.6955 2.46927C83.2895 1.48915 82.5108 0.710458 81.5307 0.304482C80.7956 0 79.8638 0 78 0C76.1362 0 75.2044 0 74.4693 0.304482C73.4892 0.710458 72.7105 1.48915 72.3045 2.46927C72 3.20435 72 4.13623 72 6V26C72 27.8638 72 28.7956 72.3045 29.5307C72.7105 30.5108 73.4892 31.2895 74.4693 31.6955C75.2044 32 76.1362 32 78 32C79.8638 32 80.7956 32 81.5307 31.6955C82.5108 31.2895 83.2895 30.5108 83.6955 29.5307C84 28.7956 84 27.8638 84 26V6Z"
+        />
+        <path
+          d="M88 26C88 27.8638 88 28.7956 88.3045 29.5307C88.7105 30.5108 89.4892 31.2895 90.4693 31.6955C91.2044 32 92.1362 32 94 32C95.8638 32 96.7956 32 97.5307 31.6955C98.5108 31.2895 99.2895 30.5108 99.6955 29.5307C100 28.7956 100 27.8638 100 26V16C100 13.7909 101.791 12 104 12C106.209 12 108 13.7909 108 16V26C108 27.8638 108 28.7956 108.304 29.5307C108.71 30.5108 109.489 31.2895 110.469 31.6955C111.204 32 112.136 32 114 32C115.864 32 116.796 32 117.531 31.6955C118.511 31.2895 119.29 30.5108 119.696 29.5307C120 28.7956 120 27.8638 120 26V11.9764C120 10.5089 120 9.77513 119.834 9.08461C119.687 8.47239 119.445 7.88712 119.116 7.35029C118.745 6.74479 118.226 6.22594 117.188 5.18823L114.812 2.81178C113.774 1.77406 113.255 1.25521 112.65 0.884159C112.113 0.555187 111.528 0.312761 110.915 0.16578C110.225 0 109.491 0 108.024 0H94.4C92.1598 0 91.0397 0 90.184 0.435974C89.4314 0.819467 88.8195 1.43139 88.436 2.18404C88 3.03968 88 4.15979 88 6.4V26Z"
+        />
+      </symbol>
+    </svg>
+
+    <header class="site-header" data-site-header>
+      <a class="brand-link" href="#services" aria-label="UXIN — início">
+        <svg class="brand-logo" role="img" aria-label="UXIN">
+          <use href="#uxin-logo"></use>
+        </svg>
       </a>
-      <a href="#services" class="btn-g">Ver o que fazemos</a>
-    </div>
+      <button class="menu-button" type="button" data-open-menu aria-haspopup="dialog">
+        <span>Menu</span>
+        <span class="menu-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    </header>
 
-  </div>
-  <div class="hero-scroll">
-    <span>Scroll</span>
-    <div class="scroll-bar"></div>
-  </div>
-</section>
+    <main id="main-content">
+      <section
+        class="service-stage"
+        id="services"
+        aria-labelledby="service-category-title"
+        data-service-stage
+      >
+        <span class="ghost-index" aria-hidden="true" data-ghost-index>01</span>
 
-<!-- Marquee -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <div class="marquee-item">Software <span class="dot"></span></div>
-    <div class="marquee-item">Apps Mobile <span class="dot"></span></div>
-    <div class="marquee-item">Design Systems <span class="dot"></span></div>
-    <div class="marquee-item">UX Research <span class="dot"></span></div>
-    <div class="marquee-item">Websites <span class="dot"></span></div>
-    <div class="marquee-item">Jornadas Digitais <span class="dot"></span></div>
-    <div class="marquee-item">Acessibilidade <span class="dot"></span></div>
-    <div class="marquee-item">Publicidade Digital <span class="dot"></span></div>
-    <div class="marquee-item">Prototipagem <span class="dot"></span></div>
-    <div class="marquee-item">Consultoria UX <span class="dot"></span></div>
-    <div class="marquee-item">Software <span class="dot"></span></div>
-    <div class="marquee-item">Apps Mobile <span class="dot"></span></div>
-    <div class="marquee-item">Design Systems <span class="dot"></span></div>
-    <div class="marquee-item">UX Research <span class="dot"></span></div>
-    <div class="marquee-item">Websites <span class="dot"></span></div>
-    <div class="marquee-item">Jornadas Digitais <span class="dot"></span></div>
-    <div class="marquee-item">Acessibilidade <span class="dot"></span></div>
-    <div class="marquee-item">Publicidade Digital <span class="dot"></span></div>
-    <div class="marquee-item">Prototipagem <span class="dot"></span></div>
-    <div class="marquee-item">Consultoria UX <span class="dot"></span></div>
-  </div>
-</div>
+        <div class="service-stage__intro" data-service-copy>
+          <p class="service-counter">
+            <span data-current-index>01</span>
+            <span aria-hidden="true">/</span>
+            <span class="sr-only">de</span>
+            <span>04</span>
+          </p>
+          <h1 id="service-category-title" data-category-title>Estratégia</h1>
+          <p class="service-description" data-category-description>
+            Transformamos desafios de negócio em produtos e experiências digitais.
+          </p>
+        </div>
 
-<!-- ========== MANIFESTO ========== -->
-<section class="manifesto pad" id="manifesto">
-  <div class="container">
-    <div class="manifesto-inner">
-      <div class="manifesto-text">
-        <div class="label r">Quem somos</div>
-        <h2 class="title r rd1">Não fazemos<br>só o bonito.</h2>
+        <div class="service-stage__lower" data-service-lower>
+          <div class="service-list" data-service-list></div>
 
-        <p class="r rd2"><strong>Soluções digitais precisam funcionar para quem usa, não só para quem encomenda.</strong> Estratégia, design e código sob a mesma responsabilidade, do início ao fim.</p>
+          <div class="stage-controls">
+            <p class="positioning">Produtos digitais que funcionam.</p>
 
-        <p class="r rd3">UX não é um departamento. É o ponto de partida. Isso muda como pesquisamos, projetamos, desenvolvemos e avaliamos resultado.</p>
+            <div class="category-controls">
+              <div class="category-progress" aria-label="Selecionar categoria de serviços">
+                <button type="button" data-category-index="0" aria-label="Estratégia">
+                  <span>01</span><i></i>
+                </button>
+                <button type="button" data-category-index="1" aria-label="Experiência">
+                  <span>02</span><i></i>
+                </button>
+                <button type="button" data-category-index="2" aria-label="Produto e Tecnologia">
+                  <span>03</span><i></i>
+                </button>
+                <button type="button" data-category-index="3" aria-label="Marca e Movimento">
+                  <span>04</span><i></i>
+                </button>
+              </div>
 
-        <p class="r rd4">Cada projeto recebe profissionais escolhidos para aquele contexto. Existe um único ponto de contato com a UXIN, que coordena todas as partes envolvidas.</p>
-      </div>
-
-      <div class="manifesto-right">
-        <div class="stat-grid r rd3">
-          <div class="stat">
-            <div class="stat-num">20</div>
-            <div class="stat-txt">anos de expertise em UX e produtos digitais</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num">26+</div>
-            <div class="stat-txt">marcas e organizações com projetos entregues</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num">5</div>
-            <div class="stat-txt">países: Brasil, Estados Unidos, México, Venezuela e Angola</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num">100%</div>
-            <div class="stat-txt">das entregas em conformidade WCAG</div>
+              <div class="arrow-controls">
+                <button type="button" data-previous-category aria-label="Categoria anterior">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20 12H4M10 6l-6 6 6 6" />
+                  </svg>
+                </button>
+                <button type="button" data-next-category aria-label="Próxima categoria">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 12h16M14 6l6 6-6 6" />
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
-      </div>
-    </div>
-  </div>
-</section>
+        <p class="sr-only" aria-live="polite" data-category-announcer></p>
+      </section>
 
-<!-- ========== SERVICES ========== -->
-<section class="services" id="services">
-  <div class="pad" style="padding-bottom: 0;">
-    <div class="container">
-      <div class="label r">O que fazemos</div>
-      <h2 class="title r rd1">Da estratégia à entrega.</h2>
-      <p class="r rd2" style="font-size: var(--text-lg); color: var(--gray-light); max-width: clamp(360px, 42vw, 700px); font-weight: 300; line-height: 1.75; margin-bottom: 1rem;">Para cada projeto, reunimos os profissionais adequados ao problema.</p>
-    </div>
-  </div>
-
-  <div class="services-carousel" role="list" aria-label="Serviços oferecidos">
-      <div class="svc r" role="listitem">
-        <div class="svc-icon">
-          <svg aria-hidden="true" width="22" aria-hidden="true" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+      <section class="editorial-section about-section" id="sobre" aria-labelledby="about-title">
+        <div class="section-label">
+          <span>Sobre a UXIN</span>
+          <span class="label-line" aria-hidden="true"></span>
         </div>
-        <h3>Software & Apps</h3>
-        <p>Sistemas web, aplicativos mobile, plataformas SaaS. Código limpo, arquitetura que escala, interface que dispensa manual.</p>
-      </div>
 
-      <div class="svc r rd1">
-        <div class="svc-icon">
-          <svg aria-hidden="true" width="22" aria-hidden="true" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        <div class="about-heading">
+          <h2 id="about-title">Não fazemos só o bonito.</h2>
+          <p>Isso facilita ou complica a vida de quem vai usar?</p>
         </div>
-        <h3>Design de Produto</h3>
-        <p>Interface, experiência, design system, prototipagem. Tudo pensado para implementação real, testado com pessoas reais.</p>
-      </div>
 
-      <div class="svc r rd2">
-        <div class="svc-icon">
-          <svg aria-hidden="true" width="22" aria-hidden="true" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+        <div class="about-copy">
+          <p>
+            A UXIN nasceu da convicção de que soluções digitais precisam funcionar para quem
+            usa, não só para quem encomenda.
+          </p>
+          <p>
+            Estratégia, design e tecnologia em um só lugar — do conceito ao código, em uma
+            única responsabilidade.
+          </p>
+          <p>
+            Cada projeto recebe um time montado sob medida. Um interlocutor, uma
+            responsabilidade.
+          </p>
         </div>
-        <h3>Sites & Plataformas Web</h3>
-        <p>Sites institucionais, e-commerces, landing pages, hotsites. Performance, SEO e conversão como premissa, não como afterthought.</p>
-      </div>
 
-      <div class="svc r rd3">
-        <div class="svc-icon">
-          <svg aria-hidden="true" width="22" aria-hidden="true" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <dl class="proof-list" aria-label="Experiência da UXIN">
+          <div>
+            <dt>~20</dt>
+            <dd>anos de experiência</dd>
+          </div>
+          <div>
+            <dt>8+</dt>
+            <dd>segmentos atendidos</dd>
+          </div>
+          <div>
+            <dt>4</dt>
+            <dd>países com projetos</dd>
+          </div>
+          <div>
+            <dt>100%</dt>
+            <dd>das entregas acessíveis</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section
+        class="editorial-section process-section"
+        id="processo"
+        aria-labelledby="process-title"
+      >
+        <div class="section-label">
+          <span>Como trabalhamos</span>
+          <span class="label-line" aria-hidden="true"></span>
         </div>
-        <h3>Pesquisa & Estratégia UX</h3>
-        <p>Pesquisa com usuários, testes de usabilidade, auditorias de experiência, mapeamento de jornadas. Decisão baseada em evidência.</p>
-      </div>
-
-      <div class="svc r rd4">
-        <div class="svc-icon">
-          <svg aria-hidden="true" width="22" aria-hidden="true" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        <div class="section-heading">
+          <h2 id="process-title">Sem mistério, sem surpresa.</h2>
+          <p>Cada etapa tem entrega clara. Você sabe o que está acontecendo — e por quê.</p>
         </div>
-        <h3>Publicidade Digital</h3>
-        <p>Campanhas, banners, materiais para redes sociais, newsletters, hotsites promocionais. Criatividade com foco em resultado.</p>
-      </div>
 
-      <div class="svc r rd5">
-        <div class="svc-icon">
-          <svg aria-hidden="true" width="22" aria-hidden="true" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        <ol class="process-list">
+          <li>
+            <span>01</span>
+            <h3>Entender</h3>
+            <p>Diagnóstico, imersão no negócio e entrevistas. Escutar antes de propor.</p>
+          </li>
+          <li>
+            <span>02</span>
+            <h3>Definir</h3>
+            <p>Escopo, roadmap e métricas de sucesso antes de virar pixel.</p>
+          </li>
+          <li>
+            <span>03</span>
+            <h3>Validar</h3>
+            <p>Protótipos testados com usuários reais. Corrigir cedo custa menos.</p>
+          </li>
+          <li>
+            <span>04</span>
+            <h3>Construir</h3>
+            <p>Sprints, revisões e testes. Código limpo, acessível e documentado.</p>
+          </li>
+          <li>
+            <span>05</span>
+            <h3>Entregar</h3>
+            <p>Deploy, treinamento e documentação. E não desaparecemos depois.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section
+        class="editorial-section trajectory-section"
+        id="trajetoria"
+        aria-labelledby="trajectory-title"
+      >
+        <div class="section-label">
+          <span>Trajetória</span>
+          <span class="label-line" aria-hidden="true"></span>
         </div>
-        <h3>Acessibilidade Digital</h3>
-        <p>Auditorias WCAG, remediação, consultoria, treinamento. Acessibilidade não é feature. É requisito. Todas as entregas em conformidade.</p>
-      </div>
-  </div>
-</section>
+        <div class="section-heading section-heading--wide">
+          <h2 id="trajectory-title">Quase 20 anos. Diversos segmentos. 4 países.</h2>
+          <p>
+            Esse repertório é ter visto de perto o que funciona, o que quebra e o que
+            realmente escala.
+          </p>
+        </div>
 
-<!-- ========== PROCESS ========== -->
-<section class="process pad" id="process">
-  <div class="container">
-    <div class="label r">Como trabalhamos</div>
-    <h2 class="title r rd1">Um processo claro,<br>do início ao fim.</h2>
-    <p class="r rd2" style="font-size: var(--text-lg); color: var(--gray-light); max-width: clamp(360px, 42vw, 700px); font-weight: 300; line-height: 1.75;">Cada fase tem escopo e entrega definidos antes de começar.</p>
+        <div
+          class="client-rail"
+          tabindex="0"
+          aria-label="Clientes e organizações com projetos entregues"
+        >
+          <ul>
+            <li>Lojas Renner</li>
+            <li>Riachuelo</li>
+            <li>Arezzo</li>
+            <li>Lojas Quero-Quero</li>
+            <li>Banco Safra</li>
+            <li>Sicredi</li>
+            <li>Mercado Bitcoin</li>
+            <li>VerdeCard</li>
+            <li>Credz</li>
+            <li>Unimed Nacional</li>
+            <li>Hermes Pardini</li>
+            <li>Schlumberger</li>
+            <li>Equinix</li>
+            <li>Coca-Cola</li>
+            <li>SEFA Paraná</li>
+            <li>AGT Angola</li>
+            <li>MASFAMU</li>
+            <li>Minerva Foods</li>
+            <li>Todeschini</li>
+            <li>Soprano</li>
+            <li>Agrofel</li>
+            <li>ViajaNet</li>
+            <li>Turistur</li>
+            <li>Fabrizzio Gianonne</li>
+          </ul>
+        </div>
 
-    <div class="process-steps">
-      <div class="step r">
-        <div class="step-n">01</div>
-        <h3>Entender</h3>
-        <p>Diagnóstico, imersão no negócio, entrevistas com as pessoas certas.</p>
-      </div>
-      <div class="step r rd1">
-        <div class="step-n">02</div>
-        <h3>Definir</h3>
-        <p>Escopo, roadmap, métricas de sucesso. A solução toma forma no papel antes de virar tela.</p>
-      </div>
-      <div class="step r rd2">
-        <div class="step-n">03</div>
-        <h3>Validar</h3>
-        <p>Protótipos testados com usuários antes de qualquer linha de código.</p>
-      </div>
-      <div class="step r rd3">
-        <div class="step-n">04</div>
-        <h3>Construir</h3>
-        <p>Sprints, revisões, testes. Código limpo, acessível, documentado.</p>
-      </div>
-      <div class="step r rd4">
-        <div class="step-n">05</div>
-        <h3>Entregar</h3>
-        <p>Deploy, treinamento, documentação. Suporte após a entrega.</p>
-      </div>
-    </div>
+        <p class="countries">Brasil · Angola · México · Venezuela</p>
+      </section>
 
-  </div>
-</section>
+      <section
+        class="editorial-section accessibility-section"
+        id="acessibilidade"
+        aria-labelledby="accessibility-title"
+      >
+        <div class="section-label">
+          <span>Acessibilidade</span>
+          <span class="label-line" aria-hidden="true"></span>
+        </div>
+        <div class="accessibility-layout">
+          <h2 id="accessibility-title">Para todos. Isso não é slogan.</h2>
+          <div>
+            <p>
+              Acessibilidade não é um checklist no final. Entra no processo desde o primeiro
+              wireframe.
+            </p>
+            <p class="accessibility-proof">100% acessível — desde o dia 1.</p>
+          </div>
+        </div>
+      </section>
 
-<!-- ========== NUMBERS ========== -->
-<section class="numbers pad">
-  <div class="container">
-    <div class="numbers-inner">
-      <div class="num-item r">
-        <div class="num-val">32%</div>
-        <div class="num-desc">a mais de receita em empresas com UX maduro vs concorrentes</div>
-        <div class="num-source">McKinsey Design Index</div>
-      </div>
-      <div class="num-item r rd1">
-        <div class="num-val">R$100</div>
-        <div class="num-desc">retorno para cada R$1 investido em experiência do usuário</div>
-        <div class="num-source">Forrester Research</div>
-      </div>
-      <div class="num-item r rd2">
-        <div class="num-val">400%</div>
-        <div class="num-desc">mais conversão em sites e apps bem projetados</div>
-        <div class="num-source">Forrester Research</div>
-      </div>
-    </div>
-  </div>
-</section>
+      <section class="editorial-section why-section" aria-labelledby="why-title">
+        <div class="section-label">
+          <span>Por que a UXIN</span>
+          <span class="label-line" aria-hidden="true"></span>
+        </div>
+        <h2 id="why-title">E não outra empresa.</h2>
 
-<!-- ========== BRANDS ========== -->
-<section class="brands pad" id="brands">
-  <div class="container">
-    <div class="label r">Trajetória</div>
-    <h2 class="title r rd1">20 anos.<br>Diversos segmentos.<br>5 países.</h2>
-    <p class="brands-intro r rd2">Vinte anos trabalhando em varejo, finanças, saúde, governo e indústria constroem um contexto difícil de adquirir só com teoria. Cada setor tem suas dinâmicas, e esse repertório entra em cada projeto novo.</p>
+        <ul class="why-list">
+          <li>
+            <span>01</span>
+            <h3>Experiência que vem de antes</h3>
+            <p>UX é o ponto de partida de cada decisão técnica e visual.</p>
+          </li>
+          <li>
+            <span>02</span>
+            <h3>Acessibilidade de verdade</h3>
+            <p>Entra desde o primeiro wireframe. Sem retrofit e sem “fase 2”.</p>
+          </li>
+          <li>
+            <span>03</span>
+            <h3>Time sob medida</h3>
+            <p>Profissionais selecionados para o contexto específico do projeto.</p>
+          </li>
+          <li>
+            <span>04</span>
+            <h3>Resultado que se mede</h3>
+            <p>NPS, conversão, retenção e tempo de tarefa orientam a evolução.</p>
+          </li>
+        </ul>
+      </section>
 
-    <div class="segments-row r rd3" aria-label="Setores de atuação">
-      <span class="segment-tag">Varejo</span>
-      <span class="segment-tag">Finanças</span>
-      <span class="segment-tag">Saúde</span>
-      <span class="segment-tag">Energia &amp; Tech</span>
-      <span class="segment-tag">Governo</span>
-      <span class="segment-tag">Indústria</span>
-      <span class="segment-tag">Viagens</span>
-      <span class="segment-tag">Luxo</span>
-    </div>
+      <section
+        class="editorial-section contact-section"
+        id="contato"
+        aria-labelledby="contact-title"
+      >
+        <div class="section-label">
+          <span>Contato</span>
+          <span class="label-line" aria-hidden="true"></span>
+        </div>
+        <div class="contact-layout">
+          <h2 id="contact-title" data-contact-title>Vamos conversar?</h2>
+          <div>
+            <p>Conte o que você está tentando resolver. Sem formulário extenso.</p>
+            <a
+              class="contact-link"
+              data-contact-link
+              href="mailto:contato@uxin.design?subject=Novo%20projeto%20com%20a%20UXIN"
+            >
+              <span>contato@uxin.design</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 19 19 5M8 5h11v11" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
 
-    <div class="brands-logos-wrap r rd4">
-      <p class="brands-context">Marcas e organizações que fizeram parte da nossa trajetória.</p>
-      <div class="brand-logos" role="list" aria-label="Marcas da trajetória">
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/renner.svg" alt="Renner" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/riachuelo.svg" alt="Riachuelo" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/arezzo.svg" alt="Arezzo" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/quero-quero.svg" alt="Quero-Quero" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/safra.svg" alt="Banco Safra" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/sicredi.svg" alt="Sicredi" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/mercado-bitcoin.svg" alt="Mercado Bitcoin" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/verdecard.svg" alt="VerdeCard" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/credz.svg" alt="Credz" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/unimed.svg" alt="Unimed Nacional" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/hermes-pardini.svg" alt="Hermes Pardini" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/schlumberger.svg" alt="Schlumberger" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/equinix.svg" alt="Equinix" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/coca-cola.svg" alt="Coca-Cola" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/sefa-pr.svg" alt="SEFA Paraná" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/agt-angola.svg" alt="AGT Angola" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/masfamu.svg" alt="MASFAMU" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/minerva-foods.svg" alt="Minerva Foods" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/todeschini.svg" alt="Todeschini" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/soprano.svg" alt="Soprano" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/agrofel.svg" alt="Agrofel" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/viajanet.svg" alt="ViajaNet" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/turistur.svg" alt="Turistur" class="brand-logo"></div>
-        <div class="brand-logo-item" role="listitem"><img src="assets/logos/fabrizzio-gianonne.svg" alt="Fabrizzio Gianonne" class="brand-logo"></div>
-      </div>
-    </div>
+    <footer class="site-footer">
+      <a class="brand-link" href="#services" aria-label="UXIN — voltar ao início">
+        <svg class="brand-logo" role="img" aria-label="UXIN">
+          <use href="#uxin-logo"></use>
+        </svg>
+      </a>
+      <p>Soluções digitais completas com DNA de experiência do usuário.</p>
+      <p>© 2026 UXIN. Todos os direitos reservados.</p>
+    </footer>
 
-    <div class="brands-countries r rd5">
-      <div class="country-tag"><img class="country-flag" src="https://flagcdn.com/w20/br.png" srcset="https://flagcdn.com/w40/br.png 2x" alt="" aria-hidden="true" width="20" height="15"> Brasil</div>
-      <div class="country-tag"><img class="country-flag" src="https://flagcdn.com/w20/us.png" srcset="https://flagcdn.com/w40/us.png 2x" alt="" aria-hidden="true" width="20" height="15"> Estados Unidos</div>
-      <div class="country-tag"><img class="country-flag" src="https://flagcdn.com/w20/mx.png" srcset="https://flagcdn.com/w40/mx.png 2x" alt="" aria-hidden="true" width="20" height="15"> México</div>
-      <div class="country-tag"><img class="country-flag" src="https://flagcdn.com/w20/ve.png" srcset="https://flagcdn.com/w40/ve.png 2x" alt="" aria-hidden="true" width="20" height="15"> Venezuela</div>
-      <div class="country-tag"><img class="country-flag" src="https://flagcdn.com/w20/ao.png" srcset="https://flagcdn.com/w40/ao.png 2x" alt="" aria-hidden="true" width="20" height="15"> Angola</div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== ACCESSIBILITY ========== -->
-<section class="access pad" id="access">
-  <div class="container">
-    <div class="access-grid">
-      <div class="access-text">
-        <div class="label r">Acessibilidade</div>
-        <h2 class="title r rd1">Acessibilidade<br>como padrão.</h2>
-        <p class="r rd2">No Brasil, mais de 18 milhões de pessoas têm alguma deficiência. Um produto que ignora isso está incompleto e exposto a risco jurídico.</p>
-        <p class="r rd3"><strong>Acessibilidade entra no processo desde o primeiro wireframe.</strong> Quando entregamos, a conformidade com WCAG já está incorporada.</p>
-      </div>
-      <div class="access-visual r rd3">
-        <div class="access-icon">
-          <svg viewBox="0 0 1000 1000" aria-hidden="true" role="presentation" xmlns="http://www.w3.org/2000/svg">
-            <g id="limbs" fill="none" stroke="var(--lime)" stroke-miterlimit="10" stroke-width="32.9">
-              <path d="M105.7,408.6c0,0,393.3,238.2,786.6,0"/>
-              <line x1="739.6" y1="876.6" x2="500" y2="520.2"/>
-              <line x1="260.2" y1="876.6" x2="500" y2="520.2"/>
-            </g>
-            <g id="circles" fill="var(--lime)" stroke="var(--lime)" stroke-miterlimit="10" stroke-width="32.9">
-              <circle cx="500" cy="284.3" r="114.9"/>
-              <circle cx="932.2" cy="374.1" r="51.3"/>
-              <circle cx="67.6" cy="374.1" r="51.3"/>
-              <circle cx="739.6" cy="876.6" r="51.3"/>
-              <circle cx="260.2" cy="876.6" r="51.3"/>
-            </g>
-            <g id="arcs" fill="var(--lime)">
-              <path d="M807.6,802.4c8.2,7.5,15.1,16.3,20.5,26.1c87.3-87,136.2-205.3,135.9-328.6c0-10.1-0.4-20.1-1-30.1c-9.9,3.2-20.3,4.8-30.8,4.8c-0.6,0-1.3,0-1.9,0c0.5,8.4,0.8,16.8,0.8,25.3C931.3,613.1,887,721.8,807.6,802.4z"/>
-              <path d="M498.6,932.4c-48.7,0.1-97-8.1-143-24.1c-3.5,10.6-8.8,20.5-15.5,29.4c103.1,37,216,36.8,319-0.7c-6.7-8.9-11.8-18.9-15.2-29.5C597.2,924,548.1,932.4,498.6,932.4z"/>
-              <path d="M67,474.7c-11.1-0.1-22.1-2-32.6-5.6c-0.7,10.2-1,20.5-1,30.9C33,623.5,82.1,741.9,169.6,829c0.4,0.4,0.8,0.8,1.2,1.2c5.2-9.9,11.9-18.9,20-26.5C110.8,723,66,613.7,66.3,500C66.3,491.5,66.5,483.1,67,474.7z"/>
-              <path d="M827.6,171c-181.7-181.7-476.3-181.7-658,0c0,0,0,0,0,0c-31.2,31.1-57.8,66.5-79.1,105.2c10.8,2.5,21.1,6.8,30.5,12.7c19.5-34.7,43.7-66.5,71.8-94.6c168.9-168.9,442.6-168.9,611.5,0c0,0,0,0,0,0c28.5,28.4,52.9,60.7,72.5,95.8c9.2-6.1,19.4-10.6,30.2-13.4C885.7,237.9,859,202.3,827.6,171z"/>
-            </g>
+    <dialog class="site-menu" data-site-menu aria-label="Menu da UXIN">
+      <div class="site-menu__inner">
+        <header class="site-menu__header">
+          <svg class="brand-logo" role="img" aria-label="UXIN">
+            <use href="#uxin-logo"></use>
           </svg>
-        </div>
-        <div class="access-h">100% Acessível</div>
-        <div class="access-sub">Todas as entregas em conformidade WCAG</div>
+          <button class="close-menu-button" type="button" data-close-menu>
+            <span>Fechar</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m5 5 14 14M19 5 5 19" />
+            </svg>
+          </button>
+        </header>
+
+        <div class="menu-accordion" data-menu-accordion></div>
+
+        <nav class="menu-utilities" aria-label="Navegação institucional">
+          <a href="#sobre">Sobre</a>
+          <a href="#processo">Processo</a>
+          <a href="#trajetoria">Trajetória</a>
+          <a href="#contato">Vamos conversar</a>
+        </nav>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== WHY ========== -->
-<section class="why pad" id="why">
-  <div class="container">
-    <div class="label r">Por que a UXIN</div>
-    <h2 class="title r rd1">O que nos<br>diferencia.</h2>
-
-    <div class="why-grid">
-      <div class="why-c r">
-        <div class="why-num">01</div>
-        <h3>Experiência que<br>vem de antes</h3>
-        <p>UX não é um departamento que adicionamos. É a razão de existir da empresa. Cada decisão técnica passa pelo filtro do usuário final.</p>
-      </div>
-      <div class="why-c r rd1">
-        <div class="why-num">02</div>
-        <h3>Acessibilidade<br>de verdade</h3>
-        <p>Entra no processo desde o primeiro wireframe. Quando entregamos, a conformidade já está incorporada.</p>
-      </div>
-      <div class="why-c r rd2">
-        <div class="why-num">03</div>
-        <h3>Time sob<br>medida</h3>
-        <p>Para cada projeto, reunimos profissionais adequados àquele contexto.</p>
-      </div>
-      <div class="why-c r rd3">
-        <div class="why-num">04</div>
-        <h3>Resultado que<br>se mede</h3>
-        <p>Definimos métricas de sucesso antes de começar e verificamos no final. NPS, conversão, retenção, tempo de tarefa.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== CTA ========== -->
-<section class="cta" id="contact">
-  <div class="cta-glow"></div>
-  <div class="cta-content">
-    <h2 class="cta-title r">Vamos<br>conversar<span style="color: var(--lime);">?</span></h2>
-    <p class="cta-desc r rd1">Conte o problema que está tentando resolver.</p>
-    <div class="cta-actions r rd2">
-      <a href="mailto:contato@uxin.design" class="btn-p">
-        Enviar e-mail
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
-      <a href="https://wa.me/" class="btn-g" aria-label="Conversar pelo WhatsApp (abre em nova janela)" rel="noopener noreferrer">WhatsApp</a>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<!-- Footer -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div>
-      <div class="footer-brand"><svg viewBox="0 0 480 128" aria-hidden="true" role="presentation" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 16.5449 0 12.8174 1.21793 9.87707C2.84183 5.95662 5.95662 2.84183 9.87707 1.21793C12.8174 0 16.5449 0 24 0C31.4551 0 35.1826 0 38.1229 1.21793C42.0434 2.84183 45.1582 5.95662 46.7821 9.87707C48 12.8174 48 16.5449 48 24V64C48 72.8366 55.1634 80 64 80C72.8366 80 80 72.8366 80 64V24C80 16.5449 80 12.8174 81.2179 9.87707C82.8418 5.95662 85.9566 2.84183 89.8771 1.21793C92.8174 0 96.5449 0 104 0C111.455 0 115.183 0 118.123 1.21793C122.043 2.84183 125.158 5.95662 126.782 9.87707C128 12.8174 128 16.5449 128 24V102.4C128 111.361 128 115.841 126.256 119.264C124.722 122.274 122.274 124.722 119.264 126.256C115.841 128 111.361 128 102.4 128H47.9058C42.0356 128 39.1005 128 36.3384 127.337C33.8896 126.749 31.5485 125.779 29.4012 124.463C26.9792 122.979 24.9037 120.904 20.7529 116.753L11.2471 107.247C7.09626 103.096 5.02084 101.021 3.53664 98.5988C2.22075 96.4515 1.25104 94.1104 0.663122 91.6616C0 88.8995 0 85.9644 0 80.0942V24Z" fill="currentColor"/><path d="M144 25.4558C144 16.631 144 12.2186 145.693 8.83721C147.24 5.74661 149.747 3.24014 152.837 1.69285C156.219 0 160.631 0 169.456 0C173.31 0 175.238 0 177.053 0.428963C178.724 0.823868 180.32 1.48514 181.781 2.38742C183.368 3.36752 184.73 4.73029 187.456 7.45584L189.898 9.89806C196.234 16.2343 199.402 19.4025 203.056 20.5895C206.269 21.6336 209.731 21.6336 212.944 20.5895C216.598 19.4025 219.766 16.2343 226.102 9.89807L228.544 7.45584C231.27 4.73029 232.632 3.36752 234.219 2.38742C235.68 1.48514 237.276 0.823868 238.947 0.428963C240.762 0 242.69 0 246.544 0C255.369 0 259.781 0 263.163 1.69285C266.253 3.24014 268.76 5.74661 270.307 8.83721C272 12.2186 272 16.631 272 25.4558C272 29.3104 272 31.2376 271.571 33.0526C271.176 34.7236 270.515 36.32 269.613 37.7808C268.632 39.3675 267.27 40.7303 264.544 43.4558L262.102 45.8981C255.766 52.2343 252.598 55.4025 251.411 59.0557C250.366 62.2692 250.366 65.7308 251.411 68.9443C252.598 72.5975 255.766 75.7657 262.102 82.1019L264.544 84.5442C267.27 87.2697 268.632 88.6325 269.613 90.2192C270.515 91.68 271.176 93.2764 271.571 94.9474C272 96.7624 272 98.6896 272 102.544C272 111.369 272 115.781 270.307 119.163C268.76 122.253 266.253 124.76 263.163 126.307C259.781 128 255.369 128 246.544 128C242.69 128 240.762 128 238.947 127.571C237.276 127.176 235.68 126.515 234.219 125.613C232.632 124.632 231.27 123.27 228.544 120.544L226.102 118.102C219.766 111.766 216.598 108.598 212.944 107.411C209.731 106.366 206.269 106.366 203.056 107.411C199.402 108.598 196.234 111.766 189.898 118.102L187.456 120.544C184.73 123.27 183.368 124.632 181.781 125.613C180.32 126.515 178.724 127.176 177.053 127.571C175.238 128 173.31 128 169.456 128C160.631 128 156.219 128 152.837 126.307C149.747 124.76 147.24 122.253 145.693 119.163C144 115.781 144 111.369 144 102.544C144 98.6896 144 96.7624 144.429 94.9474C144.824 93.2764 145.485 91.68 146.387 90.2192C147.368 88.6325 148.73 87.2697 151.456 84.5442L153.898 82.1019C160.234 75.7657 163.402 72.5975 164.589 68.9443C165.634 65.7308 165.634 62.2692 164.589 59.0557C163.402 55.4025 160.234 52.2343 153.898 45.8981L151.456 43.4558C148.73 40.7303 147.368 39.3675 146.387 37.7808C145.485 36.32 144.824 34.7236 144.429 33.0526C144 31.2376 144 29.3104 144 25.4558Z" fill="currentColor"/><path d="M336 24C336 16.5449 336 12.8174 334.782 9.87707C333.158 5.95662 330.043 2.84183 326.123 1.21793C323.183 0 319.455 0 312 0C304.545 0 300.817 0 297.877 1.21793C293.957 2.84183 290.842 5.95662 289.218 9.87707C288 12.8174 288 16.5449 288 24V104C288 111.455 288 115.183 289.218 118.123C290.842 122.043 293.957 125.158 297.877 126.782C300.817 128 304.545 128 312 128C319.455 128 323.183 128 326.123 126.782C330.043 125.158 333.158 122.043 334.782 118.123C336 115.183 336 111.455 336 104V24Z" fill="currentColor"/><path d="M352 104C352 111.455 352 115.183 353.218 118.123C354.842 122.043 357.957 125.158 361.877 126.782C364.817 128 368.545 128 376 128C383.455 128 387.183 128 390.123 126.782C394.043 125.158 397.158 122.043 398.782 118.123C400 115.183 400 111.455 400 104V64C400 55.1634 407.163 48 416 48C424.837 48 432 55.1634 432 64V104C432 111.455 432 115.183 433.218 118.123C434.842 122.043 437.957 125.158 441.877 126.782C444.817 128 448.545 128 456 128C463.455 128 467.183 128 470.123 126.782C474.043 125.158 477.158 122.043 478.782 118.123C480 115.183 480 111.455 480 104V47.9058C480 42.0356 480 39.1005 479.337 36.3384C478.749 33.8896 477.779 31.5485 476.463 29.4012C474.979 26.9792 472.904 24.9037 468.753 20.7529L459.247 11.2471C455.096 7.09626 453.021 5.02084 450.599 3.53664C448.452 2.22075 446.11 1.25104 443.662 0.663122C440.899 0 437.964 0 432.094 0H377.6C368.639 0 364.159 0 360.736 1.7439C357.726 3.27787 355.278 5.72556 353.744 8.73615C352 12.1587 352 16.6392 352 25.6V104Z" fill="currentColor"/></svg></div>
-      <p class="footer-desc">Produtos digitais com base em UX. Do conceito ao código.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Navegação</h4>
-      <a href="#manifesto">Sobre</a>
-      <a href="#services">Serviços</a>
-      <a href="#process">Processo</a>
-      <a href="#brands">Trajetória</a>
-    </div>
-    <div class="footer-col">
-      <h4>Serviços</h4>
-      <a href="#services">Software & Apps</a>
-      <a href="#services">Design de Produto</a>
-      <a href="#services">Acessibilidade</a>
-      <a href="#services">Publicidade Digital</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contato</h4>
-      <a href="mailto:contato@uxin.design">contato@uxin.design</a>
-      <a href="#" aria-label="Perfil da UXIN no LinkedIn">LinkedIn</a>
-      <a href="#" aria-label="Conversar pelo WhatsApp">WhatsApp</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>&copy; 2026 UXIN. Todos os direitos reservados.</p>
-  </div>
-</footer>
-
-<script>
-// Nav scroll
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-});
-
-// Mobile nav
-const toggle = document.getElementById('navToggle');
-const links = document.getElementById('navLinks');
-toggle.addEventListener('click', () => {
-  toggle.classList.toggle('active');
-  links.classList.toggle('open');
-  const isOpen = toggle.classList.contains('active');
-  toggle.setAttribute('aria-expanded', isOpen);
-  document.body.style.overflow = isOpen ? 'hidden' : '';
-});
-function closeMenu() {
-  toggle.classList.remove('active');
-  links.classList.remove('open');
-  toggle.setAttribute('aria-expanded', 'false');
-  document.body.style.overflow = '';
-}
-links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && links.classList.contains('open')) closeMenu(); });
-document.addEventListener('click', e => {
-  if (links.classList.contains('open') && !links.contains(e.target) && !toggle.contains(e.target)) closeMenu();
-});
-
-// Reveal
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('v'); });
-}, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
-document.querySelectorAll('.r').forEach(el => obs.observe(el));
-
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', function(e) {
-    e.preventDefault();
-    const t = document.querySelector(this.getAttribute('href'));
-    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
-
-// Subtle parallax on hero glow
-const glow = document.querySelector('.hero-glow');
-window.addEventListener('scroll', () => {
-  if (window.scrollY < window.innerHeight) {
-    glow.style.transform = `translate(${-window.scrollY * 0.15}px, ${window.scrollY * 0.25}px)`;
-  }
-});
-
-// Services carousel drag-to-scroll
-const svcCarousel = document.querySelector('.services-carousel');
-if (svcCarousel) {
-  let isDragging = false, startX = 0, scrollLeft = 0;
-  svcCarousel.addEventListener('mousedown', e => {
-    isDragging = true;
-    svcCarousel.classList.add('dragging');
-    startX = e.pageX - svcCarousel.offsetLeft;
-    scrollLeft = svcCarousel.scrollLeft;
-  });
-  const endDrag = () => { isDragging = false; svcCarousel.classList.remove('dragging'); };
-  svcCarousel.addEventListener('mouseleave', endDrag);
-  svcCarousel.addEventListener('mouseup', endDrag);
-  svcCarousel.addEventListener('mousemove', e => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - svcCarousel.offsetLeft;
-    svcCarousel.scrollLeft = scrollLeft - (x - startX) * 1.2;
-  });
-}
-
-// Easter egg: Konami code shows a fun message
-let konamiSequence = [];
-const konamiCode = [38,38,40,40,37,39,37,39,66,65];
-document.addEventListener('keydown', e => {
-  konamiSequence.push(e.keyCode);
-  konamiSequence = konamiSequence.slice(-10);
-  if (konamiSequence.join(',') === konamiCode.join(',')) {
-    const msg = document.createElement('div');
-    msg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--lime);color:var(--black);padding:2rem 3rem;border-radius:16px;font-family:var(--font-display);font-size:1.2rem;font-weight:700;z-index:99999;animation:fadeUp 0.5s var(--ease)';
-    msg.textContent = 'Você encontrou o easter egg! 🎮 Valorizamos quem explora.';
-    document.body.appendChild(msg);
-    setTimeout(() => msg.remove(), 3000);
-  }
-});
-</script>
-</body>
+    </dialog>
+  </body>
 </html>
